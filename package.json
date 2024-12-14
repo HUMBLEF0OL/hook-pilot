@@ -1,0 +1,26 @@
+{
+  "name": "git-podify",
+  "version": "1.0.0",
+  "description": "CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows.",
+  "main": "index.js",
+  "bin": {
+    "gitpodify": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HUMBLEF0OL/git-podify.git"
+  },
+  "author": "HUMBLEF0OL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HUMBLEF0OL/git-podify/issues"
+  },
+  "homepage": "https://github.com/HUMBLEF0OL/git-podify#readme",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "inquirer": "^12.2.0"
+  }
+}
