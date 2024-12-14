@@ -1,0 +1,4 @@
+#!bin/sh
+
+echo "Running pre-commit hook with Husky..."
+# Add your linting or test commands here

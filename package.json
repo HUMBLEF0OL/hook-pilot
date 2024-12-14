@@ -21,6 +21,6 @@
   "homepage": "https://github.com/HUMBLEF0OL/git-podify#readme",
   "dependencies": {
     "commander": "^12.1.0",
-    "inquirer": "^12.2.0"
+    "enquirer": "^2.4.1"
   }
 }

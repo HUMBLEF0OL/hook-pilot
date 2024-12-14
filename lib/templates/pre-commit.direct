@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Running pre-commit hook directly via Git..."
+# Add your linting or test commands here

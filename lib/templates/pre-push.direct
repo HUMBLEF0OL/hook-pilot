@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Running pre-push hook with Direct GIT..."
+# Add your linting or test commands here
