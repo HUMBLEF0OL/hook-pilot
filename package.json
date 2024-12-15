@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky",
-    "setup:git-hooks": "git config core.hooksPath .husky",
+    "setup:git-hooks": "git config core.hooksPath .git-hooks",
     "postinstall": "npm run setup:git-hooks"
   },
   "repository": {
@@ -28,7 +28,6 @@
     "mock-fs": "^5.4.1"
   },
   "devDependencies": {
-    "husky": "^9.1.7",
     "jest": "^29.7.0"
   }
 }
