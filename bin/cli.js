@@ -18,3 +18,7 @@ program
     })
 
 program.parse(process.argv);
+
+// make the configuration shareble with team as well something as below
+// "setup:git-hooks": "git config core.hooksPath .git-hooks",
+// "postinstall": "yarn run setup:git-hooks",
