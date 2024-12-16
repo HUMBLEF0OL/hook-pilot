@@ -1,4 +1,14 @@
-#!bin/sh
+#!/bin/sh
 
-echo "Running pre-commit hook with Husky..."
-# Add your linting or test commands here
+# Custom Commit Message Validator for Conventional Commits
+commit_msg=$(cat "$1")
+regex="^(feat|fix|docs|style|refactor|perf|test|chore|ci|build)(\\(.+\\))?: .{1,72}$"
+
+if ! echo "$commit_msg" | grep -Eq "$regex"; then
+    echo "❌ Invalid commit message format."
+    echo "👉 Proper format: <type>(<scope>): <subject>"
+    echo "Example: fix(button): align submit button properly"
+    exit 1
+fi
+
+echo "✅ Commit message format valid."
