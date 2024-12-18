@@ -8,7 +8,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky",
     "setup:git-hooks": "git config core.hooksPath .git-hooks",
     "postinstall": "npm run setup:git-hooks"
   },

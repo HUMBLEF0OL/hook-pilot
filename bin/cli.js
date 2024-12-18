@@ -2,62 +2,71 @@
 
 const { program } = require("commander");
 const { addHooks } = require("../lib/hooks");
-const { restoreHooks } = require("../lib/restoreHooks");
-const { setupTools } = require("../lib/setupTools");
+const { restoreConfig } = require("../lib/restoreHooks");
+const { setupTools, removeTool } = require("../lib/setupTools");
 const { prompt } = require("enquirer");
 
 program
-  .name("gitpodify")
-  .description("CLI utility to set up Git hooks and configurations")
-  .version("1.0.0");
+    .name("gitpodify")
+    .description("CLI utility to set up Git hooks and configurations")
+    .version("1.0.0");
 
 // hooks command
 
 program
-  .command("add hooks")
-  .description("Add Git hooks with predefined templates")
-  .action(() => {
-    addHooks();
-  });
+    .command("init")
+    .description(
+        "Initialize GitPodify with the selected hooks tool (Git, Husky, or Lefthook) and configure hooks path for the project",
+    )
+    .action(async () => {
+        await setupTools();
 
-program
-  .command("restore-hooks")
-  .description("Restore default Git hooks")
-  .action(async () => {
-    await restoreHooks();
-  });
+        const response = await prompt({
+            type: "confirm",
+            name: "addHooks",
+            message: "Would you like to add hooks now?",
+            initial: true,
+        });
 
-program
-  .command("init")
-  .description(
-    "Initialize GitPodify with the selected hooks tool (Git, Husky, or Lefthook) and configure hooks path for the project",
-  )
-  .action(async () => {
-    await setupTools();
+        if (response.addHooks) {
+            console.log("\n🔧 Adding hooks...");
+            try {
+                await addHooks(); // Call the hooks addition logic
+                console.log("✅ Hooks added successfully!\n");
+            } catch (err) {
+                console.log("ERROR: ", err.message);
+            }
+        } else {
+            console.log(
+                "\n⚡ You can add hooks later using: gitpodify add <hook-name>\n",
+            );
+        }
 
-    const response = await prompt({
-      type: "confirm",
-      name: "addHooks",
-      message: "Would you like to add hooks now?",
-      initial: true,
+        console.log("🎉 GitPodify initialization complete!");
     });
 
-    if (response.addHooks) {
-      console.log("\n🔧 Adding hooks...");
-      try {
-        await addHooks(); // Call the hooks addition logic
-        console.log("✅ Hooks added successfully!\n");
-      } catch (err) {
-        console.log("ERROR: ", err.message);
-      }
-    } else {
-      console.log(
-        "\n⚡ You can add hooks later using: gitpodify add <hook-name>\n",
-      );
-    }
+program
+    .command("add hooks")
+    .description("Add Git hooks with predefined templates")
+    .action(() => {
+        addHooks();
+    });
 
-    console.log("🎉 GitPodify initialization complete!");
-  });
+program
+    .command("restore")
+    .description("Restore configuration to default")
+    .action(async () => {
+        await restoreConfig();
+    });
+
+program
+    .command("remove")
+    .description("Uninstalls Git hook tools and removes all related configurations and files.")
+    .action(async () => {
+        await removeTool();
+    });
+
+
 
 program.parse(process.argv);
 
