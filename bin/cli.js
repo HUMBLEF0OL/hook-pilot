@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 const { program } = require("commander");
-const { addHooks } = require("../lib/hooks");
+const { addHooks, removeHooks } = require("../lib/hooks");
 const { restoreConfig } = require("../lib/restoreHooks");
-const { setupTools, removeTool } = require("../lib/setupTools");
+const { removeTool, initializeConfig } = require("../lib/setupTools");
 const { prompt } = require("enquirer");
 
 program
@@ -19,7 +19,7 @@ program
         "Initialize GitPodify with the selected hooks tool (Git, Husky, or Lefthook) and configure hooks path for the project",
     )
     .action(async () => {
-        await setupTools();
+        await initializeConfig();
 
         const response = await prompt({
             type: "confirm",
@@ -38,7 +38,7 @@ program
             }
         } else {
             console.log(
-                "\n⚡ You can add hooks later using: gitpodify add <hook-name>\n",
+                "\n⚡ You can add hooks later using: gitpodify add hooks\n",
             );
         }
 
@@ -53,6 +53,13 @@ program
     });
 
 program
+    .command("remove hooks")
+    .description("Select and remove specific Git hooks managed by the current configuration.")
+    .action(() => {
+        removeHooks();
+    });
+
+program
     .command("restore")
     .description("Restore configuration to default")
     .action(async () => {
@@ -60,7 +67,7 @@ program
     });
 
 program
-    .command("remove")
+    .command("uninstall")
     .description("Uninstalls Git hook tools and removes all related configurations and files.")
     .action(async () => {
         await removeTool();
@@ -70,12 +77,10 @@ program
 
 program.parse(process.argv);
 
-// make the configuration shareble with team as well something as below
 // "setup:git-hooks": "git config core.hooksPath .git-hooks",
 // git config --get core.hooksPath
 // "postinstall": "yarn run setup:git-hooks",
 
-// provision to remove all the configuration -> hard reset to git hooks
 
 // what if the user has installed more than one config
 // how will different config interact with each other if user decide to
@@ -84,3 +89,7 @@ program.parse(process.argv);
 // double check how lefthook actually works
 
 // version management
+
+// remove one hook only
+
+// check init logic
