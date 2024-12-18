@@ -1,9 +1,9 @@
-
 ## Template File Naming Convention
 
 In this project, Git hooks are set up using predefined templates. The templates are organized into different categories, and they must follow specific naming conventions to be recognized by the utility.
 
 ### Template Folder Structure:
+
 ```
 lib/
   templates/
@@ -16,16 +16,20 @@ lib/
 ```
 
 ### Naming Conventions:
+
 - **Husky Templates**: Files ending in `.husky` are used for Husky hooks (e.g., `pre-commit.husky`, `pre-push.husky`).
 - **Direct Git Hooks**: Files ending in `.direct` are used for configuring Git hooks directly (e.g., `pre-commit.direct`, `commit-msg.direct`).
 - **Custom Templates**: Users can create and use custom templates by specifying the file path during the setup.
 
 ### Adding a New Template:
+
 To add a new template:
+
 1. Create a new file in the `lib/templates` folder.
 2. Follow the naming convention based on the hook type and tool (e.g., `pre-commit.husky` or `commit-msg.direct`).
 3. Make sure the file contains the correct script or configuration for the chosen tool (Husky, Lefthook, etc.).
-```
+
+````
 
 ---
 
@@ -44,19 +48,21 @@ GitPodify is a CLI utility that helps you easily set up Git hooks for your proje
 1. **Run the Command**:
    ```bash
    gitpodify add hooks
-   ```
+````
 
 2. **Select the Hook Type**: Choose from `pre-commit`, `pre-push`, or `commit-msg`.
 
 3. **Select the Tool**: Choose whether to use `Husky`, `Lefthook`, or `Direct Git Hooks`.
 
-4. **Select a Template**: 
+4. **Select a Template**:
+
    - **Predefined Templates**: Choose from available templates for your selected hook type.
    - **Custom Templates**: Select "Custom" to provide the path to your own template file.
 
 5. **Template Folders**: The predefined templates are located in the `lib/templates` folder. You can add more templates by following the [Template Naming Convention](#template-file-naming-convention).
 
 ### Example Workflow:
+
 1. Run `gitpodify add hooks`.
 2. Choose `pre-commit` hook and `Husky` as the tool.
 3. Select a template (e.g., `lint-template`).
@@ -66,8 +72,10 @@ The hook will be set up in the correct folder with executable permissions.
 ---
 
 ### Custom Templates:
+
 If you want to use your own template, select the **Custom** option when prompted and provide the **absolute path** to your template file.
-```
+
+````
 
 This section can be linked from the `README.md` if you want to keep it separate, or included directly.
 
@@ -121,16 +129,16 @@ async function addHooks() {
         }
 
         // Continue with the rest of the `addHooks` function...
-        
+
     } catch (err) {
         console.error("❌ Error:", err.message || err);
     }
 }
-```
+````
 
 ### Key Details:
-1. **Check for Empty Folder**: 
+
+1. **Check for Empty Folder**:
    - Using `fs.readdirSync(templatesDir)` to list all files in the `lib/templates` folder.
    - If it's empty, prompt the user if they want to proceed with a custom template.
-   
 2. **User Prompt**: If the folder is empty, you can ask the user if they want to use a custom template.
