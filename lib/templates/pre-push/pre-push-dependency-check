@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "📦 Checking Dependencies..."
+
+# Run dependency check
+npm outdated
+if [ $? -ne 0 ]; then
+  echo "❌ Dependencies are outdated. Please update them before pushing."
+#   exit 1
+fi
+
+echo "✅ All dependencies are up to date."

@@ -1,0 +1,56 @@
+#!/bin/sh
+
+echo "🛠 Auto-Updating Files..."
+
+# Define the file to update (e.g., version.txt)
+version_file="version.txt"
+
+# Check if the VERSION_FILE environment variable is set; if not, use the default
+if [ -n "$VERSION_FILE" ]; then
+  version_file="$VERSION_FILE"
+fi
+
+# Ensure the version file exists or create it if missing
+if [ ! -f "$version_file" ]; then
+  echo "1.0.0" > "$version_file"
+  echo "✅ Created new version file with 1.0.0."
+fi
+
+# Read the current version and increment the patch version
+current_version=$(cat "$version_file")
+IFS='.' read -r major minor patch <<< "$current_version"
+new_version="$major.$minor.$((patch + 1))"
+
+# Update the version file
+echo "$new_version" > "$version_file"
+echo "🔄 Updated version: $current_version -> $new_version"
+
+# Check if Git is installed and configured
+if ! command -v git &> /dev/null; then
+  echo "❌ Git is not installed. Please install Git to commit changes."
+  exit 1
+fi
+
+# Ensure the user is in a Git repository
+if [ ! -d ".git" ]; then
+  echo "❌ No Git repository found. Please initialize a Git repository in this directory."
+  exit 1
+fi
+
+# Add and commit the changes to the version file
+git add "$version_file"
+git commit -m "🔧 Auto-updated version to $new_version"
+
+# Push the changes (optional)
+if [ -n "$GIT_PUSH" ]; then
+  git push
+  if [ $? -ne 0 ]; then
+    echo "❌ Failed to push changes. Please check your Git remote setup."
+    exit 1
+  fi
+  echo "✅ Changes pushed to remote."
+else
+  echo "⚠️ No push configured. To push changes, set the GIT_PUSH environment variable to true."
+fi
+
+echo "✅ Files auto-updated and changes committed."

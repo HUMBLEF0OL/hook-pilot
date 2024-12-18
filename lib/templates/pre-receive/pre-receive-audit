@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "🧐 Auditing Pushed Changes..."
+
+# Example: Check for any changes in the `src` directory
+if git diff --cached --name-only | grep -q "^src/"; then
+  echo "✅ Changes detected in 'src' directory."
+else
+  echo "⚠️ No changes detected in 'src' directory."
+fi
+
+# Example: Ensure commit message follows a certain pattern (e.g., Conventional Commits)
+commit_msg=$(git log --format=%B -n 1)
+
+if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore): "; then
+  echo "❌ Commit message does not follow Conventional Commits format."
+  exit 1
+fi
+
+echo "✅ Pushed changes are valid."

@@ -1,3 +1,0 @@
-#!/bin/sh
-echo "Running pre-push hook with Husky..."
-# Add your linting or test commands here

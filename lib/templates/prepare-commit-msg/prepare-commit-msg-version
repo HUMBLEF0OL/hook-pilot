@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "🔖 Adding Version Info to Commit Message..."
+
+# Check if package.json exists
+if [ ! -f "package.json" ]; then
+  echo "❌ package.json not found! Ensure your project has a package.json."
+  exit 1
+fi
+
+# Extract version from package.json
+version=$(jq -r '.version' package.json)
+
+# Append version info to commit message
+echo "Version: $version - $(cat "$1")" > "$1"
+
+echo "✅ Version info added to commit message."

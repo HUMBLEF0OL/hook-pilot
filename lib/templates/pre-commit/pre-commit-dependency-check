@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "📦 Checking Outdated Dependencies..."
+
+# Check for outdated dependencies
+outdated=$(npm outdated --json)
+if [ -n "$outdated" ]; then
+  echo "⚠️ Outdated dependencies detected. Run 'npm update' to update them."
+else
+  echo "✅ All dependencies are up-to-date."
+fi

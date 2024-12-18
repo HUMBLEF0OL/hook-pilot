@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "🔗 Triggering external webhook..."
+
+# Check if WEBHOOK_URL is set
+if [ -n "$WEBHOOK_URL" ]; then
+  response=$(curl -X POST -H "Content-Type: application/json" --data '{"status": "push"}' "$WEBHOOK_URL")
+
+  if [ $? -ne 0 ]; then
+    echo "❌ Failed to trigger external webhook."
+    exit 1
+  fi
+
+  echo "✅ Webhook triggered successfully."
+else
+  echo "⚠️ WEBHOOK_URL not set. Skipping webhook trigger."
+fi

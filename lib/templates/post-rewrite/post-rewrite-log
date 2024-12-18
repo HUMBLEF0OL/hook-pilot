@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "🔄 Logging commit rewrites..."
+
+# Define the log file location
+log_file="commit_rewrites.log"
+
+# Get the current date and commit hash
+current_date=$(date "+%Y-%m-%d %H:%M:%S")
+commit_hash=$(git rev-parse HEAD)
+
+# Log the commit rewrite details
+echo "[$current_date] Commit Rewrite: $commit_hash" >> "$log_file"
+
+echo "✅ Commit rewrite logged successfully in $log_file."

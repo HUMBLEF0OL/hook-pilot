@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "📑 Enforcing Tag Policies..."
+
+# Define allowed tag patterns (e.g., tags starting with 'v' followed by version number)
+allowed_tag_pattern="^v[0-9]+\.[0-9]+\.[0-9]+$"
+
+# Get the tag being pushed (if it's a tag update)
+ref_update=$1
+if [[ "$ref_update" =~ ^refs/tags/ ]]; then
+  tag_name="${ref_update#refs/tags/}"
+
+  # Check if the tag name matches the allowed pattern
+  if ! echo "$tag_name" | grep -qE "$allowed_tag_pattern"; then
+    echo "❌ Tag '$tag_name' does not follow the required naming convention. Tag must match pattern: $allowed_tag_pattern"
+    exit 1
+  fi
+
+  echo "✅ Tag '$tag_name' follows the required naming convention."
+fi

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo "🚀 Triggering Deployment..."
+
+# Check if CI_CD_API_URL and CI_CD_API_TOKEN are set
+if [ -n "$CI_CD_API_URL" ] && [ -n "$CI_CD_API_TOKEN" ]; then
+  # Define the deployment request
+  response=$(curl -X POST -H "Authorization: Bearer $CI_CD_API_TOKEN" "$CI_CD_API_URL/deployments" -d '{"ref": "$(git rev-parse --abbrev-ref HEAD)"}')
+
+  if [ $? -ne 0 ]; then
+    echo "❌ Deployment trigger failed."
+    exit 1
+  fi
+
+  echo "✅ Deployment triggered successfully."
+else
+  echo "⚠️ CI_CD_API_URL or CI_CD_API_TOKEN not set. Skipping deployment trigger."
+fi

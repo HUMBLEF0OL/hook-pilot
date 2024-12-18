@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "🔬 Running Unit Tests..."
+
+
+# Run unit tests
+npm test
+if [ $? -ne 0 ]; then
+  echo "❌ Unit tests failed. Please fix errors before pushing."
+  exit 1
+fi
+
+echo "✅ Unit tests passed."

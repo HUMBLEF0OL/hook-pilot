@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo "🔄 Running Database Migrations..."
+
+# Check if the migration tool is installed (e.g., Sequelize, Knex, etc.)
+if ! command -v sequelize &> /dev/null; then
+  echo "❌ Sequelize CLI not found! Please ensure Sequelize is installed and try again."
+  exit 1
+fi
+
+# Run the migration command (adjust for your project)
+sequelize db:migrate
+if [ $? -ne 0 ]; then
+  echo "❌ Migration failed. Please fix errors before continuing."
+  exit 1
+fi
+
+echo "✅ Database migrations completed successfully."

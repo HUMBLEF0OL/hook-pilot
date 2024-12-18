@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "📂 Checking for Large Files..."
+
+# Define the size limit (in bytes, e.g., 10MB)
+max_size=10485760  # 10MB
+
+# Check for large files staged for commit
+large_files=$(git diff --cached --name-only | while read file; do
+  if [ $(stat -c %s "$file") -gt $max_size ]; then
+    echo "$file"
+  fi
+done)
+
+if [ -n "$large_files" ]; then
+  echo "❌ Found large files that exceed the size limit: $large_files"
+  echo "Please remove or reduce the size of these files before pushing."
+  exit 1
+fi
+
+echo "✅ No large files found."

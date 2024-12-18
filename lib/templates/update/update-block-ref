@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "🚫 Blocking Ref Changes..."
+
+# Define protected refs (branches/tags) that cannot be changed
+protected_refs=("refs/heads/main" "refs/heads/develop" "refs/tags/v1.*")
+
+# Get the ref that is being updated
+ref_update=$1
+
+# Check if the ref being updated is protected
+if [[ " ${protected_refs[@]} " =~ " ${ref_update} " ]]; then
+  echo "❌ Ref '$ref_update' is protected. Ref update is not allowed."
+  exit 1
+fi
+
+echo "✅ Ref update allowed."

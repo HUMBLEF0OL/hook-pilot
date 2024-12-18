@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo "🧹 Resetting Configurations..."
+
+# List of configuration files to reset (customize this for your needs)
+config_files=("config/.env" "config/settings.json")
+
+# Reset each configuration file
+for file in "${config_files[@]}"; do
+  if [ -f "$file" ]; then
+    # Optionally reset the file to a backup or default
+    cp "$file.bak" "$file" # Assuming you have backup files
+    echo "🔄 Reset configuration file: $file"
+  else
+    echo "⚠️ Configuration file not found: $file"
+  fi
+done
+
+echo "✅ Configurations reset successfully."

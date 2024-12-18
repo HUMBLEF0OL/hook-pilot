@@ -1,8 +1,0 @@
-#!/bin/sh
-echo "🧪 Running Tests..."
-npm test
-if [ $? -ne 0 ]; then
-  echo "❌ Tests failed. Please fix errors before committing."
-  exit 1
-fi
-echo "✅ All tests passed."

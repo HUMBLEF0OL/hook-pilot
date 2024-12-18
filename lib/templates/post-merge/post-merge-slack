@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo "📢 Sending Slack Notification..."
+
+# Ensure SLACK_WEBHOOK_URL is set in the environment
+if [ -z "$SLACK_WEBHOOK_URL" ]; then
+  echo "❌ SLACK_WEBHOOK_URL is not set! Please ensure the Slack webhook URL is defined in your environment."
+  exit 1
+fi
+
+# Create the Slack message
+message=":tada: Merge completed successfully in the repository."
+
+# Send message to Slack using curl
+curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$message\"}" "$SLACK_WEBHOOK_URL"
+
+if [ $? -ne 0 ]; then
+  echo "❌ Failed to send Slack notification."
+  exit 1
+fi
+
+echo "✅ Slack notification sent successfully."

@@ -70,3 +70,5 @@ program.parse(process.argv);
 // use different tools for different hooks
 
 // double check how lefthook actually works
+
+// version management

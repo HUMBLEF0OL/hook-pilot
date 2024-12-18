@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo "🛠 Checking Branch Naming Convention..."
+
+# Define the naming convention for branches (allowing custom prefixes and flexibility)
+# This pattern supports branches like: feature/xyz, bugfix/xyz, hotfix/xyz, release/xyz, etc.
+# It ensures the branch name starts with a valid prefix (optional), followed by a slash and any string (no special characters allowed in the prefix).
+branch_name_pattern="^[a-zA-Z0-9-]+\/[a-zA-Z0-9\-_.]+$"
+
+# Get the branch name from the ref
+ref_update=$1
+if [[ "$ref_update" =~ ^refs/heads/ ]]; then
+  branch_name="${ref_update#refs/heads/}"
+
+  # Check if the branch name follows the naming convention
+  if ! echo "$branch_name" | grep -qE "$branch_name_pattern"; then
+    echo "❌ Branch '$branch_name' does not follow the required naming convention. The branch name must match pattern: $branch_name_pattern"
+    exit 1
+  fi
+
+  echo "✅ Branch '$branch_name' follows the required naming convention."
+fi

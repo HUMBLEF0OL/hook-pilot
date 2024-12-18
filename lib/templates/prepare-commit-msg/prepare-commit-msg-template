@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo "✏️ Adding Commit Message Template..."
+
+# Define the template to use (you can customize this)
+commit_template="Your commit message should follow the format: [TYPE] - Subject"
+
+# Check if a commit message exists, otherwise use the template
+if [ -z "$2" ]; then
+  echo "$commit_template" > "$1"
+  echo "✅ Commit message template applied."
+else
+  echo "❌ Commit message already exists. No changes made."
+fi

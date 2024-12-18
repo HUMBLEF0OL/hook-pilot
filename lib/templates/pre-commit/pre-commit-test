@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo "🧪 Running Unit Tests..."
+
+# Check if npm test command is available
+if ! command -v npm &> /dev/null; then
+  echo "❌ npm not found! Ensure Node.js and npm are installed."
+  exit 1
+fi
+
+# Run unit tests
+npm test
+if [ $? -ne 0 ]; then
+  echo "❌ Unit tests failed. Fix errors before committing."
+  exit 1
+fi
+
+echo "✅ All unit tests passed successfully."

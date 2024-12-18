@@ -1,0 +1,25 @@
+#!/bin/sh
+
+echo "🚀 Running Branch-Specific Tasks..."
+
+# Get the current branch name
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+
+# Define tasks per branch (you can add more tasks as necessary)
+case "$branch_name" in
+  "feature-branch")
+    echo "🔧 Running feature branch tasks..."
+    npm install
+    npm run build
+    ;;
+  "hotfix-branch")
+    echo "🔧 Running hotfix branch tasks..."
+    npm install
+    npm test
+    ;;
+  *)
+    echo "⚠️ No specific tasks defined for branch: $branch_name"
+    ;;
+esac
+
+echo "✅ Branch-specific tasks completed."

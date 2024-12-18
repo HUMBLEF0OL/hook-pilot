@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo "🧹 Running Linter..."
+
+# Check if eslint (or the linting tool) is installed
+if ! npm list --depth=0 | grep eslint &> /dev/null; then
+  echo "❌ eslint not found! Please ensure eslint is installed and try again."
+  exit 1
+fi
+
+# Run linting command (adjust for your project)
+npm run lint
+if [ $? -ne 0 ]; then
+  echo "❌ Linting failed. Please fix errors before committing."
+  exit 1
+fi
+
+echo "✅ Linting passed."

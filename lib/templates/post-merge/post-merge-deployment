@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo "🚀 Triggering Deployment..."
+
+# Ensure the deployment script or pipeline is set up
+if [ ! -f "deploy.sh" ]; then
+  echo "❌ Deployment script not found! Ensure deploy.sh or relevant deployment script is set up."
+  exit 1
+fi
+
+# Run deployment script (you can adjust this based on your deployment strategy)
+./deploy.sh
+if [ $? -ne 0 ]; then
+  echo "❌ Deployment failed. Please check your deployment script for errors."
+  exit 1
+fi
+
+echo "✅ Deployment triggered successfully."

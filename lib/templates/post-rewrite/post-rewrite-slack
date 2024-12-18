@@ -1,0 +1,28 @@
+#!/bin/sh
+
+echo "📢 Notifying Teams about commit rewrite..."
+
+# Check if SLACK_WEBHOOK_URL is set in the environment
+if [ -z "$SLACK_WEBHOOK_URL" ]; then
+  echo "❌ SLACK_WEBHOOK_URL is not set. Please set it in your environment variables."
+  exit 1
+fi
+
+# Create the notification message
+commit_hash=$(git rev-parse HEAD)
+commit_message=$(git log -1 --pretty=%B)
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+notification_message="*Commit Rewrite Notification*\n\nBranch: $branch_name\nCommit: $commit_hash\nMessage: $commit_message\n"
+
+# Send the notification to Slack using the webhook URL
+response=$(curl -X POST -H 'Content-type: application/json' --data "{
+  \"text\": \"$notification_message\"
+}" "$SLACK_WEBHOOK_URL")
+
+# Check for errors in sending the notification
+if [ $? -ne 0 ]; then
+  echo "❌ Failed to send Slack notification."
+  exit 1
+fi
+
+echo "✅ Teams notified successfully via Slack."

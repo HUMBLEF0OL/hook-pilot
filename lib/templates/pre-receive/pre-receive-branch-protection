@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "🔒 Enforcing Branch Protection..."
+
+# Define the protected branches
+protected_branches=("main" "develop")
+
+# Get the name of the pushed branch
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+
+# Check if the branch is protected
+if [[ ! " ${protected_branches[@]} " =~ " ${branch_name} " ]]; then
+  echo "❌ Push rejected: Branch '$branch_name' is not a protected branch."
+  exit 1
+fi
+
+echo "✅ Branch '$branch_name' is protected. Push allowed."

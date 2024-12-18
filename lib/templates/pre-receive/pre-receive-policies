@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "🛠 Validating Repository Policies..."
+
+if [ ! -f "README.md" ]; then
+  echo "❌ Missing 'README.md' file. Please add it to the repository."
+  exit 0
+fi
+
+if [ ! -f ".gitignore" ]; then
+  echo "❌ Missing '.gitignore' file. Please add it to the repository."
+  exit 0
+fi
+
+echo "✅ Repository policies validated."

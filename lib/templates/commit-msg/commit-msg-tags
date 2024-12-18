@@ -1,0 +1,69 @@
+#!/bin/sh
+
+echo "🔎 Ensuring Required Commit Tags..."
+
+# Configuration
+required_tags=("WIP" "TEST" "FEATURE") # Tags that MUST appear
+optional_tags=("FIX" "DOCS")           # Tags that MAY appear
+case_sensitive=true                    # Set to false to ignore case
+strict_position=false                  # Set to true to check tags only at the beginning of the message
+
+# Read the commit message
+commit_msg=$(cat "$1")
+
+# Function to handle case sensitivity
+check_tag() {
+  local tag=$1
+  if [ "$case_sensitive" = false ]; then
+    echo "$commit_msg" | grep -qi "\[$tag\]"
+  else
+    echo "$commit_msg" | grep -q "\[$tag\]"
+  fi
+}
+
+# Function to check tag position
+check_position() {
+  local tag=$1
+  if [ "$strict_position" = true ]; then
+    echo "$commit_msg" | grep -q "^\\[$tag\\]"
+  else
+    check_tag "$tag"
+  fi
+}
+
+# Check for required tags
+valid=false
+missing_tags=()
+
+for tag in "${required_tags[@]}"; do
+  if ! check_position "$tag"; then
+    missing_tags+=("$tag")
+  else
+    valid=true
+  fi
+done
+
+# Output error if required tags are missing
+if [ "${#missing_tags[@]}" -gt 0 ]; then
+  echo "❌ Commit message is missing required tag(s): [${missing_tags[*]}]."
+  echo "⚠️ Required tags: ${required_tags[*]}"
+  echo "💡 Example commit message:"
+  echo "   [WIP] feat(auth): add login endpoint"
+  # exit 1
+fi
+
+# Optional tags check (informational)
+found_optional=()
+for tag in "${optional_tags[@]}"; do
+  if check_tag "$tag"; then
+    found_optional+=("$tag")
+  fi
+done
+
+# Display results
+echo "✅ Commit message contains required tags."
+if [ "${#found_optional[@]}" -gt 0 ]; then
+  echo "ℹ️ Optional tags found: [${found_optional[*]}]"
+fi
+
+echo "📝 Commit message checks completed successfully."

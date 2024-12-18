@@ -1,0 +1,16 @@
+#!/bin/sh
+
+echo "🔐 Checking for Protected Branches..."
+
+# List of protected branches (modify as per your requirements)
+protected_branches=("main" "master" "production")
+
+# Check if the branch being pushed is protected
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [[ " ${protected_branches[@]} " =~ " ${current_branch} " ]]; then
+  echo "❌ Pushing to protected branch '$current_branch' is not allowed. Please push to a non-protected branch."
+  exit 1
+fi
+
+echo "✅ Branch '$current_branch' is not protected. Push allowed."
