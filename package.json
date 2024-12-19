@@ -1,5 +1,5 @@
 {
-  "name": "git-podify",
+  "name": "hookpilot",
   "version": "1.0.0",
   "description": "CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows. Easily add predefined hooks, linting, unit tests, and commit message checks to automate Git processes and improve development productivity.",
   "main": "index.js",
