@@ -1,7 +1,7 @@
 {
   "name": "git-podify",
   "version": "1.0.0",
-  "description": "CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows.",
+  "description": "CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows. Easily add predefined hooks, linting, unit tests, and commit message checks to automate Git processes and improve development productivity.",
   "main": "index.js",
   "bin": {
     "hookpilot": "./bin/hookpilot.js"
@@ -21,6 +21,14 @@
     "url": "https://github.com/HUMBLEF0OL/git-podify/issues"
   },
   "homepage": "https://github.com/HUMBLEF0OL/git-podify#readme",
+  "keywords": [
+    "CLI",
+    "Git hooks",
+    "boilerplate",
+    "Git",
+    "automation",
+    "workflow"
+  ],
   "dependencies": {
     "commander": "^12.1.0",
     "enquirer": "^2.4.1",
@@ -28,5 +36,20 @@
   },
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "contributors": [
+    "HUMBLEF0OL"
+  ],
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md"
+  ],
+  "private": false,
+  "publishConfig": {
+    "access": "public"
   }
 }
