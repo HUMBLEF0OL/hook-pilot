@@ -31,7 +31,7 @@ program
         if (response.addHooks) {
             console.log("\n🔧 Adding hooks...");
             try {
-                await addHooks(); // Call the hooks addition logic
+                await addHooks();
                 console.log("✅ Hooks added successfully!\n");
             } catch (err) {
                 console.log("ERROR: ", err.message);
@@ -78,18 +78,18 @@ program
 program.parse(process.argv);
 
 // "setup:git-hooks": "git config core.hooksPath .git-hooks",
-// git config --get core.hooksPath
-// "postinstall": "yarn run setup:git-hooks",
+// git config --get core.hooksPath :done
+// "postinstall": "yarn run setup:git-hooks", : done
 
 
-// what if the user has installed more than one config
+// what if the user has installed more than one config -.> not allowed -> will prompt user to add hooks instead
 // how will different config interact with each other if user decide to
-// use different tools for different hooks
+// use different tools for different hooks -> not allowed
 
 // double check how lefthook actually works
 
 // version management
 
-// remove one hook only
+// remove one hook only :done
 
-// check init logic
+// check init logic :resolved

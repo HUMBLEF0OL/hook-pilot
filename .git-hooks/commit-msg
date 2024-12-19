@@ -20,21 +20,3 @@ fi
 echo "✅ Commit message follows Conventional Commit format."
 
 
-# Template: commit-msg-length
-echo "📏 Checking Commit Message Length..."
-
-# Get the commit message
-commit_msg=$(cat "$1")
-
-# Define the maximum commit message length (e.g., 72 characters)
-max_length=72
-
-if [ ${#commit_msg} -gt $max_length ]; then
-  echo "❌ Commit message exceeds the maximum length of $max_length characters."
-  echo "Please shorten your commit message."
-  # exit 1
-fi
-
-echo "✅ Commit message is within the allowed length."
-
-
