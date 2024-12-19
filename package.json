@@ -4,7 +4,7 @@
   "description": "CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows.",
   "main": "index.js",
   "bin": {
-    "hookpilot": "./bin/cli.js"
+    "hookpilot": "./bin/hookpilot.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

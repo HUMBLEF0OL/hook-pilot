@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { program } = require("commander");
-const { addHooks, removeHooks } = require("../lib/hooks");
+const { addHooks, removeHooks, listHooks } = require("../lib/hooks");
 const { restoreConfig } = require("../lib/restoreHooks");
 const { removeTool, initializeConfig } = require("../lib/setupTools");
 const { prompt } = require("enquirer");
@@ -44,17 +44,23 @@ program
     });
 
 program
-    .command("add hooks")
+    .command("add")
     .description("Add Git hooks with predefined templates")
     .action(() => {
         addHooks();
     });
 
 program
-    .command("remove hooks")
+    .command("remove")
     .description("Select and remove specific Git hooks managed by the current configuration.")
     .action(() => {
         removeHooks();
+    });
+program
+    .command("list")
+    .description("List the currently configured hooks.")
+    .action(() => {
+        listHooks();
     });
 
 program
