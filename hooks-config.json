@@ -1,6 +1,7 @@
 {
   "name": "git",
   "hooks": [
+    "pre-commit",
     "commit-msg"
   ]
 }
