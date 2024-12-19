@@ -40,14 +40,14 @@ User instructions can be placed in the **`README.md`** file, especially if you h
 #### Example for `README.md`:
 
 ```markdown
-## User Instructions for GitPodify
+## User Instructions for hookpilot
 
-GitPodify is a CLI utility that helps you easily set up Git hooks for your projects. Follow these instructions to set up hooks using predefined templates or custom configurations.
+hookpilot is a CLI utility that helps you easily set up Git hooks for your projects. Follow these instructions to set up hooks using predefined templates or custom configurations.
 
 ### Adding Git Hooks
 1. **Run the Command**:
    ```bash
-   gitpodify add hooks
+   hookpilot add hooks
 ````
 
 2. **Select the Hook Type**: Choose from `pre-commit`, `pre-push`, or `commit-msg`.
@@ -63,7 +63,7 @@ GitPodify is a CLI utility that helps you easily set up Git hooks for your proje
 
 ### Example Workflow:
 
-1. Run `gitpodify add hooks`.
+1. Run `hookpilot add hooks`.
 2. Choose `pre-commit` hook and `Husky` as the tool.
 3. Select a template (e.g., `lint-template`).
 

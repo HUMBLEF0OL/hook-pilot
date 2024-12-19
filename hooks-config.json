@@ -3,6 +3,6 @@
   "hooks": [
     "pre-commit",
     "commit-msg",
-    "post-commit"
+    "pre-push"
   ]
 }

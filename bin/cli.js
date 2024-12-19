@@ -7,14 +7,14 @@ const { removeTool, initializeConfig } = require("../lib/setupTools");
 const { prompt } = require("enquirer");
 
 program
-    .name("gitpodify")
+    .name("hookpilot")
     .description("CLI utility to set up Git hooks and configurations")
     .version("1.0.0");
 
 program
     .command("init")
     .description(
-        "Initialize GitPodify with the selected hooks tool (Git, Husky, or Lefthook) and configure hooks path for the project",
+        "Initialize hookpilot with the selected hooks tool (Git, Husky, or Lefthook) and configure hooks path for the project",
     )
     .action(async () => {
         await initializeConfig();
@@ -36,11 +36,11 @@ program
             }
         } else {
             console.log(
-                "\n⚡ You can add hooks later using: gitpodify add hooks\n",
+                "\n⚡ You can add hooks later using: hookpilot add hooks\n",
             );
         }
 
-        console.log("🎉 GitPodify initialization complete!");
+        console.log("🎉 hookpilot initialization complete!");
     });
 
 program

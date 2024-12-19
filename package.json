@@ -4,7 +4,7 @@
   "description": "CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows.",
   "main": "index.js",
   "bin": {
-    "gitpodify": "./bin/cli.js"
+    "hookpilot": "./bin/cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,6 +1,6 @@
 ---
 
-## ⚡ Challenge: Build **GitPodify** - A CLI Utility for Git Hooks Automation  
+## ⚡ Challenge: Build **hookpilot** - A CLI Utility for Git Hooks Automation  
 
 **🎯 Goal**: Create a CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows.
 
@@ -10,8 +10,8 @@
 
 - **CLI Commands**
 
-  - `gitpodify add hooks`: Adds Git hooks like `pre-commit`, `pre-push`, or `commit-msg` with predefined templates.
-  - `gitpodify lint`: Sets up linting workflows within Git hooks.
+  - `hookpilot add hooks`: Adds Git hooks like `pre-commit`, `pre-push`, or `commit-msg` with predefined templates.
+  - `hookpilot lint`: Sets up linting workflows within Git hooks.
 
 - **Template Support**
 
@@ -48,7 +48,7 @@
 
 ### 📦 Deliverables
 
-- A CLI tool that runs via `npm` or `npx` (e.g., `npx gitpodify add hooks`).
+- A CLI tool that runs via `npm` or `npx` (e.g., `npx hookpilot add hooks`).
 - Predefined templates for common use cases (linting, unit testing, commit message validation).
 - Documentation covering installation, usage, and customization options.
 
@@ -67,7 +67,7 @@
 Running the command:
 
 ```bash
-gitpodify add hooks --type pre-commit --tool husky
+hookpilot add hooks --type pre-commit --tool husky
 ```
 
 Generates a pre-commit hook template with ESLint and unit test commands using Husky.
