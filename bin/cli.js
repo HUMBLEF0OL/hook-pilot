@@ -90,4 +90,3 @@ program.parse(process.argv);
 
 // remove one hook only :done
 
-// check init logic :resolved
