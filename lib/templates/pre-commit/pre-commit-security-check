@@ -1,21 +1,42 @@
 #!/bin/sh
-
 echo "🔒 Running Security Check..."
 
-# Run npm audit
-audit_summary=$(npm audit --production --json | jq -r '.metadata.vulnerabilities | "Critical: \(.critical), High: \(.high), Moderate: \(.moderate), Low: \(.low)"')
-
-if [ -z "$audit_summary" ]; then
-  echo "❌ npm audit not found! Ensure npm and jq are installed."
-  # exit 1
+# Check if npm is installed
+if ! command -v npm >/dev/null 2>&1; then
+  echo "❌ 'npm' is not installed. Install Node.js and npm first."
+  exit 1
 fi
 
-echo "🔍 Security Check Summary: $audit_summary"
+# Run npm audit and parse output using grep and sed
+audit_output=$(npm audit --omit=dev --json 2>/dev/null)
+if [ -z "$audit_output" ]; then
+  echo "❌ Failed to run 'npm audit'. Check your npm configuration."
+  exit 1
+fi
 
-# Optionally terminate on critical vulnerabilities
-if echo "$audit_summary" | grep -q "Critical: [1-9]"; then
+# Extract vulnerability counts using grep and sed
+critical=$(echo "$audit_output" | grep -o '"critical":[0-9]*' | sed 's/"critical"://')
+high=$(echo "$audit_output" | grep -o '"high":[0-9]*' | sed 's/"high"://')
+moderate=$(echo "$audit_output" | grep -o '"moderate":[0-9]*' | sed 's/"moderate"://')
+low=$(echo "$audit_output" | grep -o '"low":[0-9]*' | sed 's/"low"://')
+
+# Default values if vulnerabilities are not found
+critical=${critical:-0}
+high=${high:-0}
+moderate=${moderate:-0}
+low=${low:-0}
+
+# Display the summary
+echo "🔍 Security Check Summary:"
+echo "   Critical: $critical"
+echo "   High: $high"
+echo "   Moderate: $moderate"
+echo "   Low: $low"
+
+# Terminate on critical vulnerabilities
+if [ "$critical" -gt 0 ]; then
   echo "❌ Critical vulnerabilities detected. Fix them before committing."
-  # exit 1
+  exit 1
 fi
 
 echo "✅ No critical security vulnerabilities found."
