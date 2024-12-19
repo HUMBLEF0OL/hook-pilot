@@ -181,9 +181,6 @@ exit 1  # Failure will abort the commit
 
 ---
 
-For more information about custom hooks and advanced configurations, please refer to our [comprehensive guide](docs/extending.md) or reach out to our support team.
-
----
 
 ## 👨‍💻 Contributing
 Contributions are welcome! Submit issues, feature requests, or pull requests to improve HookPilot.
