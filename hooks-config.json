@@ -2,6 +2,7 @@
   "name": "git",
   "hooks": [
     "pre-commit",
-    "commit-msg"
+    "commit-msg",
+    "post-commit"
   ]
 }

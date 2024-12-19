@@ -1,3 +1,0 @@
-#!/bin/sh
-echo "🔍 Running pre-commit checks..."
-exit 0

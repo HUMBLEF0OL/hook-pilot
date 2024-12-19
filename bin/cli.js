@@ -11,8 +11,6 @@ program
     .description("CLI utility to set up Git hooks and configurations")
     .version("1.0.0");
 
-// hooks command
-
 program
     .command("init")
     .description(
