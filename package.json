@@ -1,15 +1,13 @@
 {
   "name": "hookpilot",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows. Easily add predefined hooks, linting, unit tests, and commit message checks to automate Git processes and improve development productivity.",
   "main": "index.js",
   "bin": {
     "hookpilot": "./bin/hookpilot.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "setup:git-hooks": "git config core.hooksPath .git-hooks",
-    "postinstall": "npm run setup:git-hooks"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -31,11 +29,11 @@
   ],
   "dependencies": {
     "commander": "^12.1.0",
-    "enquirer": "^2.4.1",
-    "mock-fs": "^5.4.1"
+    "enquirer": "^2.4.1"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "mock-fs": "^5.4.1"
   },
   "engines": {
     "node": ">=14.0.0"
