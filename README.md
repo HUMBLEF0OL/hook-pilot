@@ -10,7 +10,7 @@
 - **Customizable Configurations**: Hooks can be configured to suit project-specific needs (e.g., branch protection, large file checks).
 - **Lightweight and Fast**: Designed to be minimal and efficient, avoiding unnecessary dependencies.
 - **Extensible**: Add custom scripts for unique workflows.
-- **Language Agnostic**: Works with any tech stack and integrates with Git seamlessly.
+- **Git Tool Support**: Integrates with Git and supports popular tools like Husky, streamlining your workflow.
 
 ---
 
