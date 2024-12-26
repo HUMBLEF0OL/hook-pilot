@@ -1,0 +1,6 @@
+{
+    "name": "husky",
+    "hooks": [
+        "pre-commit"
+    ]
+}
