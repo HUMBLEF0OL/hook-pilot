@@ -10,7 +10,7 @@ regex='^([a-z]+)(\([a-z ]*\))?: .+'
 
 if ! echo "$commit_msg" | grep -qE "$regex"; then
   echo "❌ Commit message does not follow Conventional Commit format."
-  echo "Please ensure your commit message matches: <type>(<scope>): <description>"
+  echo "Please ensure your commit message matches: \`<type>(<scope>): <description>\`"
   exit 1
 fi
 
