@@ -1,18 +1,19 @@
 #!/bin/sh
 
-echo "🧹 Running Code Formatter..."
 
-# Check if Prettier is installed
-if ! command -v prettier &> /dev/null; then
-  echo "❌ Prettier not found! Please install it (e.g., 'npm install prettier --save-dev')."
+echo -e "\033[1m🧹  Running Code Formatter...\033[0m"
+
+# Check if Prettier is installed using npx
+if ! npx prettier --version > /dev/null 2>&1; then
+  echo -e "\033[1;31m❌  Prettier not found! Please install it (e.g., 'npm install prettier --save-dev').\033[0m"
   exit 1
 fi
 
 # Format code (adjust the file patterns as needed)
 npx prettier --write "**/*.{js,jsx,ts,tsx,css,scss,md}"
 if [ $? -ne 0 ]; then
-  echo "❌ Formatting failed. Please check for errors."
-  # exit 1
+  echo -e "\033[1;31m❌  Formatting failed. Please check for errors.\033[0m"
+  exit 1
 fi
 
-echo "✅ Code formatted successfully."
+echo -e "\033[1;32m✅  Code formatted successfully.\033[0m"
