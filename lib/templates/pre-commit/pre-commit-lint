@@ -1,18 +1,35 @@
 #!/bin/sh
 
-echo "🧹 Running Linter..."
+echo -e "\033[1m🧹 Running Linter...\033[0m"
 
-# Check if eslint (or the linting tool) is installed
-if ! npm list --depth=0 | grep eslint &> /dev/null; then
-  echo "❌ eslint not found! Please ensure eslint is installed and try again."
+# Check if lint command exists in package.json
+if ! grep -q '"lint"' package.json; then
+  echo -e "\033[33m⚠️  Lint command not found! Adding a default lint command to package.json...\033[0m"
+
+  # Add the lint command to package.json using Node.js
+  node -e "
+  const fs = require('fs');
+  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+  if (!packageJson.scripts) {
+    packageJson.scripts = {};
+  }
+
+  // Add default lint command
+  packageJson.scripts.lint = 'echo \"Please install linting tools like ESLint, JSHint, etc.\" && exit 1';
+
+  // Save changes to package.json
+  fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
+  console.log('✅ Lint command added to package.json.');
+  "
   exit 1
 fi
 
 # Run linting command (adjust for your project)
 npm run lint
 if [ $? -ne 0 ]; then
-  echo "❌ Linting failed. Please fix errors before committing."
+  echo -e "\033[1;31m❌  Linting failed. Please fix errors before committing.\033[0m"
   exit 1
 fi
 
-echo "✅ Linting passed."
+echo -e "\033[1;32m✅ Linting passed.\033[0m"
