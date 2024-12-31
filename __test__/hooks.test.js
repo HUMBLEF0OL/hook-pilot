@@ -8,17 +8,17 @@ jest.mock("path");
 jest.mock("enquirer");
 
 describe("addHooks", () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-    test("should throw an error if configuration is not initialized", async () => {
-        fs.existsSync.mockReturnValue(false);
+  test("should throw an error if configuration is not initialized", async () => {
+    fs.existsSync.mockReturnValue(false);
 
-        await addHooks();
+    await addHooks();
 
-        expect(console.error).toHaveBeenCalledWith(
-            "\n❌ Configuration not initialized. Please run 'hookpilot init' first."
-        );
-    });
+    expect(console.error).toHaveBeenCalledWith(
+      "\n❌ Configuration not initialized. Please run 'hookpilot init' first.",
+    );
+  });
 });

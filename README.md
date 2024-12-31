@@ -15,9 +15,11 @@
 ---
 
 ## 📦 Available Git Hooks
+
 Below is the comprehensive list of hooks available in **HookPilot**, along with their specific tasks and configurations (where required).
 
 ### 🔹 `pre-commit`
+
 Hooks that run before a commit is finalized.
 
 | **Name**                            | **Value**                     | **Description**                                                | **Requires Configuration**                   |
@@ -29,6 +31,7 @@ Hooks that run before a commit is finalized.
 | Check Dependencies (`npm outdated`) | `pre-commit-dependency-check` | Check for outdated dependencies.                               | None                                         |
 
 ### 🔹 `prepare-commit-msg`
+
 Hooks that prepare or modify the commit message.
 
 | **Name**                | **Value**                     | **Description**                                              | **Requires Configuration** |
@@ -38,6 +41,7 @@ Hooks that prepare or modify the commit message.
 | Add Branch Info         | `prepare-commit-msg-branch`   | Add branch-specific information to commit messages.          | None                       |
 
 ### 🔹 `commit-msg`
+
 Hooks that validate commit messages.
 
 | **Name**             | **Value**                 | **Description**                                        | **Requires Configuration** |
@@ -47,6 +51,7 @@ Hooks that validate commit messages.
 | Ensure Commit Tags   | `commit-msg-tags`         | Validate presence of specific tags in commit messages. | None                       |
 
 ### 🔹 `post-commit`
+
 Hooks that run after a commit is finalized.
 
 | **Name**             | **Value**                 | **Description**                               | **Requires Configuration**            |
@@ -57,6 +62,7 @@ Hooks that run after a commit is finalized.
 | Auto-update Files    | `post-commit-auto-update` | Automatically update files post-commit.       | None                                  |
 
 ### 🔹 `pre-push`
+
 Hooks that run before code is pushed to a remote repository.
 
 | **Name**                 | **Value**                     | **Description**                                        | **Requires Configuration**               |
@@ -68,6 +74,7 @@ Hooks that run before code is pushed to a remote repository.
 | Check Protected Branches | `pre-push-protected-branches` | Prevent pushes to protected branches.                  | Define protected branches in repository. |
 
 ### 🔹 `post-merge`
+
 Hooks that run after a merge operation is completed.
 
 | **Name**             | **Value**                 | **Description**                           | **Requires Configuration**                        |
@@ -78,6 +85,7 @@ Hooks that run after a merge operation is completed.
 | Notify Teams (Slack) | `post-merge-slack`        | Notify teams about the merge.             | SLACK_WEBHOOK_URL must be set.                    |
 
 ### 🔹 `post-checkout`
+
 Hooks that run after a branch or file checkout.
 
 | **Name**                     | **Value**                    | **Description**                             | **Requires Configuration**             |
@@ -91,21 +99,25 @@ Hooks that run after a branch or file checkout.
 ## 📖 Usage
 
 1. Install HookPilot:
+
    ```bash
    npm install hookpilot --save-dev
    ```
 
 2. Initialize HookPilot in your project:
+
    ```bash
    hookpilot init
    ```
 
 3. Add or configure hooks using the interactive CLI:
+
    ```bash
    hookpilot add
    ```
 
 4. Restore hooks:
+
    ```bash
    hookpilot restore
    ```
@@ -117,6 +129,7 @@ Hooks that run after a branch or file checkout.
 6. List hooks:
    ```bash
    hookpilot list
+   ```
 
 Here's the updated content with the added information about using `--no-verify` to override hooks:
 
@@ -125,26 +138,31 @@ Here's the updated content with the added information about using `--no-verify` 
 ## 📖 Usage
 
 1. Install HookPilot:
+
    ```bash
    npm install hookpilot --save-dev
    ```
 
 2. Initialize HookPilot in your project:
+
    ```bash
    hookpilot init
    ```
 
 3. Add or configure hooks using the interactive CLI:
+
    ```bash
    hookpilot add
    ```
 
 4. Restore hooks:
+
    ```bash
    hookpilot restore
    ```
 
 5. Remove hooks:
+
    ```bash
    hookpilot remove
    ```
@@ -159,16 +177,17 @@ Here's the updated content with the added information about using `--no-verify` 
 If you need to bypass the execution of Git hooks temporarily (e.g., for a quick commit or testing purposes), you can use the `--no-verify` flag. This skips all hooks for the specified Git operation.
 
 #### Example:
+
 ```bash
 git commit -m "Your commit message" --no-verify
 ```
 
 > **Note**: Use this flag cautiously, as skipping hooks might result in bypassing critical checks like linting, security scans, or tests.
 
-
 ---
 
 ## 🛠️ Configuration
+
 Some hooks require additional configuration, like setting up environment variables, defining branch protection rules, or installing tools. See the **Requires Configuration** column for each hook to know what needs to be set up.
 
 ---
@@ -180,6 +199,7 @@ HookPilot supports custom hooks through an interactive CLI process that guides y
 ## Interactive Configuration Process
 
 1. Start the interactive hook configuration:
+
    ```bash
    hookpilot add
    ```
@@ -189,7 +209,6 @@ HookPilot supports custom hooks through an interactive CLI process that guides y
 3. From the template menu, choose the "Custom (create your own)" option
 
 4. Specify the script path (shell script or Node.js)
-
 
 ## Custom Script Example
 
@@ -210,36 +229,39 @@ exit 1  # Failure will abort the commit
 ## Best Practices
 
 ### Script Requirements
+
 - Ensure scripts are executable (`chmod +x script.sh`)
 - Follow exit code conventions:
   - `0` for success
   - Non-zero values for failure (will abort the Git operation)
 
 ### Development Guidelines
+
 - Keep scripts focused on single responsibilities
 - Document any dependencies or configuration requirements
 - Test hooks thoroughly before deployment
 
 ### Common Use Cases
+
 - Custom validation rules
 - Project-specific build processes
 - Integration with internal tools
 - Team-specific workflow automation
 
-
 ---
 
-
 ## 👨‍💻 Contributing
+
 Contributions are welcome! Submit issues, feature requests, or pull requests to improve HookPilot.
 
 ---
 
 ## 📜 License
+
 **HookPilot** is licensed under the MIT License.
 
 ---
 
 ## 📞 Support
-For support or questions, reach out via GitHub Issues or at [123amitrana0123@gmail.com](mailto:123amitrana0123@gmail.com).
 
+For support or questions, reach out via GitHub Issues or at [123amitrana0123@gmail.com](mailto:123amitrana0123@gmail.com).
