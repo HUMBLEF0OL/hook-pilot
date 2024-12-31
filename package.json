@@ -1,6 +1,6 @@
 {
   "name": "hookpilot",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "CLI utility that generates boilerplate Git hooks and configurations to streamline project-specific workflows. Easily add predefined hooks, linting, unit tests, and commit message checks to automate Git processes and improve development productivity.",
   "main": "index.js",
   "bin": {
@@ -28,7 +28,7 @@
     "workflow"
   ],
   "dependencies": {
-    "commander": "^12.1.0",
+    "commander": "^13.0.0",
     "enquirer": "^2.4.1"
   },
   "devDependencies": {

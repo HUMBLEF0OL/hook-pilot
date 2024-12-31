@@ -1,25 +1,25 @@
 {
   "pre-commit": [
     {
-      "name": "Linting (npm run lint)",
+      "name": "Linting",
       "value": "pre-commit-lint",
       "requiresConfig": "Ensure linting tools (e.g., ESLint) are installed and configured."
     },
     {
-      "name": "Format (npm run format)",
+      "name": "Format",
       "value": "pre-commit-format",
-      "requiresConfig": "Ensure code formatters (e.g., Prettier) are installed and configured."
+      "requiresConfig": "Ensure Prettier is installed and configured."
     },
     {
-      "name": "Unit Tests (npm test)",
+      "name": "Unit Tests",
       "value": "pre-commit-test"
     },
     {
-      "name": "Security Check (npm run security)",
+      "name": "Security Check",
       "value": "pre-commit-security-check"
     },
     {
-      "name": "Check Dependencies (npm outdated)",
+      "name": "Check Dependencies",
       "value": "pre-commit-dependency-check"
     }
   ],
