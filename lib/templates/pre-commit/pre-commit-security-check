@@ -1,69 +1,79 @@
 #!/bin/sh
-# ANSI color codes
-WHITE='\033[1;37m'
+
 RED='\033[1;31m'
-YELLOW='\033[1;33m'
 GREEN='\033[1;32m'
-BOLD='\033[1m'
-RESET='\033[0m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+INFO='\033[1m'
 
-echo "${BOLD}${WHITE}🔒 Running Security Check...${RESET}"
+echo -e "${INFO}🔒 Starting secret scanning on staged files...${NC}"
 
-# Run npm audit and capture the exit code
-npm audit --omit=dev --json >/tmp/audit_output.json 2>/tmp/audit_error.log
-audit_exit_code=$?
+# Patterns to search for - properly escaped for grep -P
+patterns=(
+    # AWS
+    'AKIA[0-9A-Z]{16}'                        # AWS Access Key ID
+    '[A-Za-z0-9/+=]{40}'                      # AWS Secret Access Key
+    
+    # Generic API tokens - minimum 32 chars, must include numbers and letters
+    '([a-zA-Z]+[0-9]+|[0-9]+[a-zA-Z]+)[a-zA-Z0-9_\-]{30,}'  # Generic API tokens
+    
+    # Generic passwords and secrets - more specific patterns
+    'password[\s]*=[\s]*['\''"][^'\''"]+['\''"]'    # Password assignments
+    'secret[\s]*=[\s]*['\''"][^'\''"]+['\''"]'      # Secret assignments
+    
+    # Database connection strings - more specific patterns
+    'mysql://[a-zA-Z0-9]+:[^@\s]+@[a-zA-Z0-9.-]+[0-9a-zA-Z]'  # MySQL connection strings
+    'postgres://[a-zA-Z0-9]+:[^@\s]+@[a-zA-Z0-9.-]+[0-9a-zA-Z]'  # PostgreSQL connection strings
+    
+    # Other common patterns
+    'bearer\s+[a-zA-Z0-9_\-.+/=]{16,}'        # Bearer tokens
+    '[0-9a-fA-F]{32}([0-9a-fA-F]{8})?'        # MD5/SHA hashes
+)
 
-# Check for npm audit failure or network issues
-if [ $audit_exit_code -ne 0 ]; then
-  echo "${BOLD}${RED}❌ 'npm audit' failed with exit code $audit_exit_code. Check error log for details.${RESET}"
-  cat /tmp/audit_error.log
-  exit 1
+# Get list of staged files
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+
+# Check if there are any staged files
+if [ -z "$staged_files" ]; then
+    echo -e "${YELLOW}No files are currently staged for commit.${NC}"
+    exit 0
 fi
 
-# Check if the audit output is empty
-if [ ! -s /tmp/audit_output.json ]; then
-  echo "${BOLD}${RED}❌ No vulnerabilities found, but the audit output is empty. Check your npm configuration.${RESET}"
-  exit 1
+found_secrets=0
+
+# Scan each staged file
+for file in $staged_files; do
+    # Check if file exists (in case it was deleted)
+    if [ ! -f "$file" ]; then
+        continue
+    fi
+    
+    echo -e "${YELLOW}Scanning: $file${NC}"
+    
+    # Get staged content of the file
+    staged_content=$(git show ":$file")
+    
+    for pattern in "${patterns[@]}"; do
+        # Search for pattern in staged content
+        matches=$(echo "$staged_content" | grep -P "$pattern" | grep -Pv '^[\s]*[|][-|]+[|][\s]*$' || true)
+        if [ ! -z "$matches" ]; then
+            # Output findings with colors
+            echo -e "\n${RED}Suspicious content found in: $file${NC}"
+            echo "Pattern type: $pattern"
+            echo "Suspicious content:"
+            echo "$matches"
+            echo "----------------------------------------"
+            found_secrets=$((found_secrets + 1))
+        fi
+    done
+done
+
+
+if [ $found_secrets -eq 0 ]; then
+    echo -e "✅${GREEN} No secrets found in staged files.${NC}"
+    exit 0
+else
+    echo -e "❌${RED} Found $found_secrets potential secrets in staged files.${NC}"
+    echo -e "⚠️${YELLOW}  Please review these findings and ensure no sensitive information is being committed.${NC}"
+    exit 1
 fi
-
-# Extract vulnerability counts using grep and sed
-critical=$(grep -o '"critical":[0-9]*' /tmp/audit_output.json | sed 's/"critical"://')
-high=$(grep -o '"high":[0-9]*' /tmp/audit_output.json | sed 's/"high"://')
-moderate=$(grep -o '"moderate":[0-9]*' /tmp/audit_output.json | sed 's/"moderate"://')
-low=$(grep -o '"low":[0-9]*' /tmp/audit_output.json | sed 's/"low"://')
-
-# Default values if vulnerabilities are not found
-critical=${critical:-0}
-high=${high:-0}
-moderate=${moderate:-0}
-low=${low:-0}
-
-# Display the summary
-echo "${BOLD}${WHITE}🔍 Security Check Summary:${RESET}"
-echo "   ${BOLD}${RED}Critical: $critical${RESET}"
-echo "   ${BOLD}${YELLOW}High: $high${RESET}"
-echo "   ${BOLD}${WHITE}Moderate: $moderate${RESET}"
-echo "   ${BOLD}${GREEN}Low: $low${RESET}"
-
-# Optionally, set custom thresholds to warn instead of fail on certain severities
-critical_threshold=1
-high_threshold=5
-
-# Terminate on critical vulnerabilities
-if [ "$critical" -gt 0 ]; then
-  echo "${BOLD}${RED}❌ Critical vulnerabilities detected. Fix them before committing.${RESET}"
-  exit 1
-fi
-
-# Warn on high vulnerabilities if the threshold is reached
-if [ "$high" -ge "$high_threshold" ]; then
-  echo "${BOLD}${YELLOW}⚠️ High vulnerabilities detected ($high). Please review and address them.${RESET}"
-fi
-
-# Terminate on high vulnerabilities if the threshold is exceeded
-if [ "$high" -gt "$critical_threshold" ]; then
-  echo "${BOLD}${RED}❌ High vulnerabilities exceed the threshold. Fix them before committing.${RESET}"
-  exit 1
-fi
-
-echo "${BOLD}${GREEN}✅ No critical security vulnerabilities found.${RESET}"
