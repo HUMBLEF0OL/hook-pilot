@@ -1,18 +1,18 @@
 #!/bin/sh
 
-echo "🧪 Running Unit Tests..."
+echo -e "\033[1m🧪 Running Unit Tests...\033[0m"
 
 # Check if npm test command is available
 if ! command -v npm &> /dev/null; then
-  echo "❌ npm not found! Ensure Node.js and npm are installed."
+  echo -e "\033[1;31m❌ npm not found! Ensure Node.js and npm are installed.\033[0m"
   exit 1
 fi
 
 # Run unit tests
 npm test
 if [ $? -ne 0 ]; then
-  echo "❌ Unit tests failed. Fix errors before committing."
+  echo -e "\033[1;31m❌ Unit tests failed. Fix errors before committing.\033[0m"
   exit 1
 fi
 
-echo "✅ All unit tests passed successfully."
+echo -e "\033[1;32m✅ All unit tests passed successfully.\033[0m"
