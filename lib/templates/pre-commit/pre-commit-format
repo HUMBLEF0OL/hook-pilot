@@ -5,7 +5,7 @@ echo "🧹 Running Code Formatter..."
 # Check if Prettier is installed
 if ! command -v prettier &> /dev/null; then
   echo "❌ Prettier not found! Please install it (e.g., 'npm install prettier --save-dev')."
-  # exit 1
+  exit 1
 fi
 
 # Format code (adjust the file patterns as needed)
