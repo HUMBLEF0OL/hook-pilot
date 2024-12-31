@@ -118,6 +118,54 @@ Hooks that run after a branch or file checkout.
    ```bash
    hookpilot list
 
+Here's the updated content with the added information about using `--no-verify` to override hooks:
+
+---
+
+## 📖 Usage
+
+1. Install HookPilot:
+   ```bash
+   npm install hookpilot --save-dev
+   ```
+
+2. Initialize HookPilot in your project:
+   ```bash
+   hookpilot init
+   ```
+
+3. Add or configure hooks using the interactive CLI:
+   ```bash
+   hookpilot add
+   ```
+
+4. Restore hooks:
+   ```bash
+   hookpilot restore
+   ```
+
+5. Remove hooks:
+   ```bash
+   hookpilot remove
+   ```
+
+6. List hooks:
+   ```bash
+   hookpilot list
+   ```
+
+## Overriding Hooks
+
+If you need to bypass the execution of Git hooks temporarily (e.g., for a quick commit or testing purposes), you can use the `--no-verify` flag. This skips all hooks for the specified Git operation.
+
+#### Example:
+```bash
+git commit -m "Your commit message" --no-verify
+```
+
+> **Note**: Use this flag cautiously, as skipping hooks might result in bypassing critical checks like linting, security scans, or tests.
+
+
 ---
 
 ## 🛠️ Configuration
