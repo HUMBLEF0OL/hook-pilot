@@ -1,11 +1,20 @@
 #!/bin/sh
 
-echo "📦 Checking Outdated Dependencies..."
+echo -e "\033[1m📦 Checking Outdated Dependencies...\033[0m"
 
 # Check for outdated dependencies
 outdated=$(npm outdated --json)
+
 if [ -n "$outdated" ]; then
-  echo "⚠️ Outdated dependencies detected. Run 'npm update' to update them."
+  echo -e "\033[1;33m⚠️  Outdated dependencies detected:\033[0m"
+  
+  # Use Node.js to format and display JSON
+  node -e "
+  const outdated = $outdated;
+  console.log(JSON.stringify(outdated, null, 2));
+  "
+
+  echo -e "\033[1;33m⚠️ Run 'npm update' to update outdated dependencies.\033[0m"
 else
-  echo "✅ All dependencies are up-to-date."
+  echo -e "✅ All dependencies are up-to-date."
 fi
