@@ -59,11 +59,11 @@ Hooks that prepare or modify the commit message.
 
 Hooks that validate commit messages.
 
-| **Name**             | **Value**                 | **Description**                                        | **Requires Configuration** |
-| -------------------- | ------------------------- | ------------------------------------------------------ | -------------------------- |
-| Commit Message Check | `commit-msg-conventional` | Enforce Conventional Commit standards for messages.    | None                       |
-| Check Message Length | `commit-msg-length`       | Ensure commit messages adhere to length limits.        | None                       |
-| Ensure Commit Tags   | `commit-msg-tags`         | Validate presence of specific tags in commit messages. | None                       |
+| **Name**             | **Value**                 | **Description**                                     | **Requires Configuration** |
+| -------------------- | ------------------------- | --------------------------------------------------- | -------------------------- |
+| Commit Message Check | `commit-msg-conventional` | Enforce Conventional Commit standards for messages. | None                       |
+| Check Message Length | `commit-msg-length`       | Ensure commit messages adhere to length limits.     | None                       |
+
 
 ### 🔹 `post-commit`
 

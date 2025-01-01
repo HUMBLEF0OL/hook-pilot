@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "📏 Checking Commit Message Length..."
+echo -e "\033[1;37m📏 Checking Commit Message Length...\033[0m"
 
 # Get the commit message
 commit_msg=$(cat "$1")
@@ -9,9 +9,9 @@ commit_msg=$(cat "$1")
 max_length=72
 
 if [ ${#commit_msg} -gt $max_length ]; then
-  echo "❌ Commit message exceeds the maximum length of $max_length characters."
-  echo "Please shorten your commit message."
-  # exit 1
+  echo -e "\033[1;31m❌ Commit message exceeds the maximum length of $max_length characters.\033[0m"
+  echo -e "\033[1;33mPlease shorten your commit message.\033[0m"
+  exit 1
+else
+  echo -e "\033[1;32m✅ Commit message is within the allowed length.\033[0m"
 fi
-
-echo "✅ Commit message is within the allowed length."

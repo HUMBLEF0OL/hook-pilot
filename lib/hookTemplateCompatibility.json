@@ -45,10 +45,6 @@
     {
       "name": "Check Message Length",
       "value": "commit-msg-length"
-    },
-    {
-      "name": "Ensure Commit Tags",
-      "value": "commit-msg-tags"
     }
   ],
   "post-commit": [
