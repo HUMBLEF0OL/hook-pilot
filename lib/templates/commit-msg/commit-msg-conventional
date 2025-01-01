@@ -1,17 +1,49 @@
 #!/bin/sh
 
-echo "🔍 Checking Commit Message for Conventional Commits..."
+echo -e "\033[1;37m🔍 Checking Commit Message for Conventional Commits...\033[0m"
 
 # Get the commit message
 commit_msg=$(cat "$1")
 
-# Define the regex for Conventional Commits
-regex='^([a-z]+)(\([a-z ]*\))?: .+'
+# Define valid types for Conventional Commits (feat, fix, etc.)
+valid_types="feat|fix|docs|chore|style|refactor|test"
 
+# Define the regex for Conventional Commits (supports optional scope, ! for breaking change)
+regex="^($valid_types)(\([a-zA-Z0-9 ]*\))?(!)?: .+"
+
+# Check if the commit message follows the conventional commit format
 if ! echo "$commit_msg" | grep -qE "$regex"; then
-  echo "❌ Commit message does not follow Conventional Commit format."
-  echo "Please ensure your commit message matches: \`<type>(<scope>): <description>\`"
+  echo -e "\033[1;31m❌ Commit message does not follow Conventional Commit format.\033[0m"
+  echo -e "\033[1;33mThe commit message should follow this format:\033[0m"
+  echo -e "\033[1;37m  <type>(<scope>): <description>\033[0m"
+  echo -e "\033[1;37mValid types: feat, fix, docs, chore, style, refactor, test\033[0m"
+  echo -e "\033[1;37mExample: 'feat(auth): add login functionality'\033[0m"
   exit 1
 fi
 
-echo "✅ Commit message follows Conventional Commit format."
+# Check for a BREAKING CHANGE footer
+if echo "$commit_msg" | grep -qE "BREAKING CHANGE:"; then
+  echo -e "\033[1;32m✅ Commit message includes a BREAKING CHANGE footer.\033[0m"
+else
+  # Check if the commit message uses the ! to denote a breaking change
+  if echo "$commit_msg" | grep -qE "($valid_types)\([a-zA-Z0-9 ]*\)!:"; then
+    echo -e "\033[1;32m✅ Commit message includes a breaking change in the type/scope.\033[0m"
+  fi
+fi
+
+# Check for optional commit body and footer (should be present after a blank line)
+body_start=$(echo "$commit_msg" | grep -n -m 1 "^ " | cut -d: -f1)
+footer_start=$(echo "$commit_msg" | grep -n -m 1 -E "^BREAKING CHANGE:|^.*: .*" | cut -d: -f1)
+
+# Check that if a body is provided, it's correctly formatted with a blank line separating it
+if [ -n "$body_start" ] && [ "$body_start" -gt 1 ]; then
+  if [ -n "$footer_start" ] && [ "$footer_start" -gt "$body_start" ]; then
+    echo -e "\033[1;37m✅ Commit message body and footer are correctly formatted.\033[0m"
+  else
+    echo -e "\033[1;31m❌ Commit message body or footer is incorrectly formatted.\033[0m"
+    echo -e "\033[1;33mPlease ensure the body is separated from the description with a blank line, and footers follow the body.\033[0m"
+    exit 1
+  fi
+fi
+
+echo -e "\033[1;32m✅ Commit message follows Conventional Commit format.\033[0m"
