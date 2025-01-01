@@ -1,5 +1,17 @@
 # HookPilot
 
+<center>
+<pre><br/>
+██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗██████╗ ██╗██╗      ██████╗ ████████╗
+██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔══██╗██║██║     ██╔═══██╗╚══██╔══╝
+███████║██║   ██║██║   ██║█████╔╝ ██████╔╝██║██║     ██║   ██║   ██║   
+██╔══██║██║   ██║██║   ██║██╔═██╗ ██╔═══╝ ██║██║     ██║   ██║   ██║   
+██║  ██║╚██████╔╝╚██████╔╝██║  ██╗██║     ██║███████╗╚██████╔╝   ██║   
+╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝ ╚═════╝    ╚═╝   
+   <br/>                                                              
+</pre>
+</center>
+
 **HookPilot** is a flexible and configurable Git hook manager that allows developers to automate workflows and enforce coding standards across the software development lifecycle. Whether you need to run linters, perform security checks, or trigger CI/CD pipelines, HookPilot makes it seamless to integrate these tasks into Git hooks.
 
 ---

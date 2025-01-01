@@ -71,7 +71,6 @@ done
 
 if [ $found_secrets -eq 0 ]; then
     echo -e "✅${GREEN} No secrets found in staged files.${NC}"
-    exit 0
 else
     echo -e "❌${RED} Found $found_secrets potential secrets in staged files.${NC}"
     echo -e "⚠️${YELLOW}  Please review these findings and ensure no sensitive information is being committed.${NC}"

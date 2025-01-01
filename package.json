@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HUMBLEF0OL/git-podify.git"
+    "url": "git+https://github.com/HUMBLEF0OL/hook-pilot.git"
   },
   "author": "HUMBLEF0OL",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/HUMBLEF0OL/git-podify/issues"
+    "url": "https://github.com/HUMBLEF0OL/hook-pilot/issues"
   },
-  "homepage": "https://github.com/HUMBLEF0OL/git-podify#readme",
+  "homepage": "https://github.com/HUMBLEF0OL/hook-pilot#readme",
   "keywords": [
     "CLI",
     "Git hooks",
