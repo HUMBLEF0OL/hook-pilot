@@ -9,8 +9,9 @@ if ! npx prettier --version > /dev/null 2>&1; then
   exit 1
 fi
 
+files_to_format = $(get_hook_config "pre-commit" "files_to_format" "**/*.{js,jsx,ts,tsx,css,scss,md}")
 # Format code (adjust the file patterns as needed)
-npx prettier --write "**/*.{js,jsx,ts,tsx,css,scss,md}"
+npx prettier --write files_to_format
 if [ $? -ne 0 ]; then
   echo -e "\033[1;31m❌  Formatting failed. Please check for errors.\033[0m"
   exit 1

@@ -8,7 +8,13 @@ INFO='\033[1m'
 
 echo -e "${INFO}🔒 Starting secret scanning on staged files...${NC}"
 
-# Patterns to search for - properly escaped for grep -P
+# Handle excluded files
+default_excluded_files="package-lock.json"
+
+# Get excluded files from config
+excluded_files=$(get_hook_config "pre-commit" "excluded_files" "$default_excluded_files")
+excluded_files=$(echo "$excluded_files" | sed 's/[[:space:]]*$//; s/^"//; s/"$//')
+# Patterns as an array
 patterns=(
     # AWS
     'AKIA[0-9A-Z]{16}'                        # AWS Access Key ID
@@ -30,6 +36,9 @@ patterns=(
     '[0-9a-fA-F]{32}([0-9a-fA-F]{8})?'        # MD5/SHA hashes
 )
 
+# Convert space-separated excluded files string to array
+IFS=' ' read -ra excluded_files_array <<< "$excluded_files"
+
 # Get list of staged files
 staged_files=$(git diff --cached --name-only --diff-filter=ACM)
 
@@ -38,11 +47,7 @@ if [ -z "$staged_files" ]; then
     echo -e "${YELLOW}No files are currently staged for commit.${NC}"
     exit 0
 fi
-
 found_secrets=0
-
-# Exclude specific files
-excluded_files=("package-lock.json" "yarn.lock" "pnpm-lock.yaml" "*.log" "*.png" "*.jpg" "*.jpeg" "*.gif" "*.mp4" "*.mov" "*.pdf" "dist/*" "build/*" ".next/*" "out/*" ".env.example" ".env.local" ".gitignore" "README.md" "CHANGELOG.md" ".vscode/*" "*.iml")
 
 # Scan each staged file
 for file in $staged_files; do
@@ -52,10 +57,17 @@ for file in $staged_files; do
     fi
     
     # Skip excluded files
-    if printf '%s\n' "${excluded_files[@]}" | grep -qx "$file"; then
-        echo -e "${YELLOW}Skipping excluded file: $file${NC}"
-        continue
-    fi
+    skip_file=0
+    for exclude_pattern in "${excluded_files_array[@]}"; do
+        file_basename=$(basename "$file")
+        if [[ "$file_basename" == "$exclude_pattern" ]]; then
+            echo -e "${YELLOW}Skipping excluded file: $file${NC}"
+            skip_file=1
+            break
+        fi
+    done
+    
+    [ $skip_file -eq 1 ] && continue
 
     echo -e "${YELLOW}Scanning: $file${NC}"
     

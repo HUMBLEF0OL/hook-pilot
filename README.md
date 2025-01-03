@@ -4,7 +4,6 @@
     <img src="./assets/logo.png" alt="HookPilot logo" style="width: 50%; height: auto;">
 </p>
 
-
 **HookPilot** is a flexible and configurable Git hook manager that allows developers to automate workflows and enforce coding standards across the software development lifecycle. Whether you need to run linters, perform security checks, or trigger CI/CD pipelines, HookPilot makes it seamless to integrate these tasks into Git hooks.
 
 ---
@@ -53,7 +52,6 @@ Hooks that validate commit messages.
 | -------------------- | ------------------------- | --------------------------------------------------- | -------------------------- |
 | Commit Message Check | `commit-msg-conventional` | Enforce Conventional Commit standards for messages. | None                       |
 | Check Message Length | `commit-msg-length`       | Ensure commit messages adhere to length limits.     | None                       |
-
 
 ### 🔹 `post-commit`
 

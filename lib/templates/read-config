@@ -125,6 +125,11 @@ get_hook_config() {
                             brace_count++
                         } else if (char == "}") {
                             brace_count--
+                        } else if (char == "[" && brace_count == 0) {
+                            bracket_count++
+                        } else if (char == "]" && brace_count == 0 && bracket_count > 0) {
+                            bracket_count--
+                            if (bracket_count == 0) break
                         } else if ((char == "," || char == "}") && !in_quotes && brace_count <= 0 && bracket_count <= 0) {
                             break
                         }
@@ -133,12 +138,19 @@ get_hook_config() {
                     }
 
                     # Append only valid characters to value_str
-                    if (!((char == "}" || char == ",") && !in_quotes && brace_count <= 0 && bracket_count <= 0)) {
+                    if (!(char == "}" || char == "," || char == "]") || (in_quotes || bracket_count > 0)) {
                         value_str = value_str char
                     }
                 }
                 
-                print clean_value(value_str)
+                # Handle array values
+                if (value_str ~ /^\[.*\]$/) {
+                    # Remove square brackets and split array elements
+                    gsub(/[\[\]"]/, "", value_str)
+                    print value_str
+                } else {
+                    print clean_value(value_str)
+                }
             }
         }
     ' "$CONFIG_FILE")

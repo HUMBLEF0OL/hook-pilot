@@ -8,7 +8,9 @@
     },
     {
       "name": "Format",
-      "variables": {},
+      "variables": {
+        "files_to_format": "**/*.{js,jsx,ts,tsx,css,scss,md}"
+      },
       "value": "pre-commit-format",
       "requiresConfig": "Ensure Prettier is installed and configured."
     },
@@ -19,7 +21,9 @@
     },
     {
       "name": "Security Check",
-      "variables": {},
+      "variables": {
+        "excluded_files": "package-lock.json yarn.lock pnpm-lock.yaml *.log *.pdf dist/* build/* .next/* .env.example .env.local .gitignore CHANGELOG.md README.md"
+      },
       "value": "pre-commit-security-check"
     },
     {
