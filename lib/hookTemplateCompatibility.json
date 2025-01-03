@@ -2,91 +2,114 @@
   "pre-commit": [
     {
       "name": "Linting",
+      "variables": {},
       "value": "pre-commit-lint",
       "requiresConfig": "Ensure linting tools (e.g., ESLint) are installed and configured."
     },
     {
       "name": "Format",
+      "variables": {},
       "value": "pre-commit-format",
       "requiresConfig": "Ensure Prettier is installed and configured."
     },
     {
       "name": "Unit Tests",
+      "variables": {},
       "value": "pre-commit-test"
     },
     {
       "name": "Security Check",
+      "variables": {},
       "value": "pre-commit-security-check"
     },
     {
       "name": "Check Dependencies",
+      "variables": {},
       "value": "pre-commit-dependency-check"
     }
   ],
   "prepare-commit-msg": [
     {
       "name": "Commit Message Template",
+      "variables": {},
       "value": "prepare-commit-msg-template"
     },
     {
       "name": "Add Version Info",
+      "variables": {},
       "value": "prepare-commit-msg-version"
     },
     {
       "name": "Add Branch Info",
+      "variables": {},
       "value": "prepare-commit-msg-branch"
     }
   ],
   "commit-msg": [
     {
       "name": "Commit Message Check (Conventional Commits)",
+      "variables": {
+        "allowed_commit_types": "feat|fix|docs|chore|style|refactor|test"
+      },
       "value": "commit-msg-conventional"
     },
     {
       "name": "Check Message Length",
+      "variables": {
+        "max_length": 72
+      },
       "value": "commit-msg-length"
     }
   ],
   "post-commit": [
     {
       "name": "Log Commit",
+      "variables": {},
       "value": "post-commit-log"
     },
     {
       "name": "Notify Teams (Slack)",
+      "variables": {},
       "value": "post-commit-slack",
       "requiresConfig": "SLACK_WEBHOOK_URL must be set in your environment variables."
     },
     {
       "name": "Trigger CI/CD",
+      "variables": {},
       "value": "post-commit-cicd",
       "requiresConfig": "CI/CD pipeline credentials must be configured (e.g., GitHub Actions, Jenkins)."
     },
     {
       "name": "Auto-update Files",
+      "variables": {},
       "value": "post-commit-auto-update"
     }
   ],
   "pre-push": [
     {
       "name": "Unit Tests (npm test)",
+      "variables": {},
       "value": "pre-push-test"
     },
     {
       "name": "Dependency Check",
+      "variables": {},
       "value": "pre-push-dependency-check"
     },
     {
       "name": "Block Secrets",
+      "variables": {},
       "value": "pre-push-secrets-check"
     },
     {
       "name": "Check Large Files",
+      "variables": {},
       "value": "pre-push-large-files",
       "requiresConfig": "Set up large file limit in the script."
     },
     {
       "name": "Check Protected Branches",
+      "variables": {},
       "value": "pre-push-protected-branches",
       "requiresConfig": "Define protected branches in repository settings."
     }
@@ -94,20 +117,24 @@
   "post-merge": [
     {
       "name": "Run Migrations",
+      "variables": {},
       "value": "post-merge-migrations",
       "requiresConfig": "Ensure migration tools (e.g., Sequelize, Knex) are configured."
     },
     {
       "name": "Trigger Deployments",
+      "variables": {},
       "value": "post-merge-deployment",
       "requiresConfig": "Ensure deployment scripts or pipelines are set up."
     },
     {
       "name": "Reset Configurations",
+      "variables": {},
       "value": "post-merge-reset-config"
     },
     {
       "name": "Notify Teams (Slack)",
+      "variables": {},
       "value": "post-merge-slack",
       "requiresConfig": "SLACK_WEBHOOK_URL must be set in your environment variables."
     }
@@ -115,16 +142,19 @@
   "post-checkout": [
     {
       "name": "Reconfigure Environment",
+      "variables": {},
       "value": "post-checkout-env",
       "requiresConfig": "Ensure environment specific configuration is defined."
     },
     {
       "name": "Reset Permissions",
+      "variables": {},
       "value": "post-checkout-permissions",
       "requiresConfig": "Define files or directories requiring specific permissions"
     },
     {
       "name": "Handle Branch-specific Tasks",
+      "variables": {},
       "value": "post-checkout-branch-tasks",
       "requiresConfig": "Ensure branch-specific task scripts are defined."
     }
@@ -132,15 +162,18 @@
   "pre-receive": [
     {
       "name": "Enforce Branch Protection",
+      "variables": {},
       "value": "pre-receive-branch-protection",
       "requiresConfig": "Define branch protection rules in repository settings."
     },
     {
       "name": "Audit Pushed Changes",
+      "variables": {},
       "value": "pre-receive-audit"
     },
     {
       "name": "Validate Repository Policies",
+      "variables": {},
       "value": "pre-receive-policies",
       "requiresConfig": "Define the repository policies"
     }
@@ -148,14 +181,17 @@
   "update": [
     {
       "name": "Block Ref Changes",
+      "variables": {},
       "value": "update-block-ref"
     },
     {
       "name": "Enforce Tag Policies",
+      "variables": {},
       "value": "update-enforce-tags"
     },
     {
       "name": "Check Branch Naming",
+      "variables": {},
       "value": "update-branch-naming",
       "requiresConfig": "Define branch naming conventions in repository settings."
     }
@@ -163,16 +199,19 @@
   "post-receive": [
     {
       "name": "Notify Systems (Slack)",
+      "variables": {},
       "value": "post-receive-slack",
       "requiresConfig": "SLACK_WEBHOOK_URL must be set in your environment variables."
     },
     {
       "name": "Deploy Code",
+      "variables": {},
       "value": "post-receive-deployment",
       "requiresConfig": "Deployment scripts or CI/CD pipelines must be configured."
     },
     {
       "name": "Trigger Webhooks",
+      "variables": {},
       "value": "post-receive-webhook",
       "requiresConfig": "Define webhook endpoints in repository or CI/CD configurations."
     }
@@ -180,10 +219,12 @@
   "post-rewrite": [
     {
       "name": "Log Commit Rewrites",
+      "variables": {},
       "value": "post-rewrite-log"
     },
     {
       "name": "Notify Teams (Slack)",
+      "variables": {},
       "value": "post-rewrite-slack",
       "requiresConfig": "SLACK_WEBHOOK_URL must be set in your environment variables."
     }

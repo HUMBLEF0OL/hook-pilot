@@ -41,6 +41,9 @@ fi
 
 found_secrets=0
 
+# Exclude specific files
+excluded_files=("package-lock.json" "yarn.lock" "pnpm-lock.yaml" "*.log" "*.png" "*.jpg" "*.jpeg" "*.gif" "*.mp4" "*.mov" "*.pdf" "dist/*" "build/*" ".next/*" "out/*" ".env.example" ".env.local" ".gitignore" "README.md" "CHANGELOG.md" ".vscode/*" "*.iml")
+
 # Scan each staged file
 for file in $staged_files; do
     # Check if file exists (in case it was deleted)
@@ -48,6 +51,12 @@ for file in $staged_files; do
         continue
     fi
     
+    # Skip excluded files
+    if printf '%s\n' "${excluded_files[@]}" | grep -qx "$file"; then
+        echo -e "${YELLOW}Skipping excluded file: $file${NC}"
+        continue
+    fi
+
     echo -e "${YELLOW}Scanning: $file${NC}"
     
     # Get staged content of the file
@@ -67,7 +76,6 @@ for file in $staged_files; do
         fi
     done
 done
-
 
 if [ $found_secrets -eq 0 ]; then
     echo -e "✅${GREEN} No secrets found in staged files.${NC}"

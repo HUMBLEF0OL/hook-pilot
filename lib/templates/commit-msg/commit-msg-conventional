@@ -5,18 +5,27 @@ echo -e "\033[1;37m🔍 Checking Commit Message for Conventional Commits...\033[
 commit_msg=$(cat "$1")
 
 allowed_commit_types=$(get_hook_config "commit-msg" "allowed_commit_types" "feat|fix|docs|chore|style|refactor|test")
+message_format=$(get_hook_config "commit-msg" "regex" "\\([a-zA-Z0-9 ]*\\))?(!)?: .+")
 
-# Define the regex for Conventional Commits (supports optional scope, ! for breaking change)
-regex=$(get_hook_config "commit-msg" "regex" "^($allowed_commit_types)(\([a-zA-Z0-9 ]*\))?(!)?: .+")
+# Combine patterns to create the full regex
+full_regex="^($allowed_commit_types)($message_format"
 
 # Check if the commit message follows the conventional commit format
-if ! echo "$commit_msg" | grep -qE "$regex"; then
-  echo -e "\033[1;31m❌ Commit message does not follow Conventional Commit format.\033[0m"
-  echo -e "\033[1;33mThe commit message should follow this format:\033[0m"
-  echo -e "\033[1;37m  <type>(<scope>): <description>\033[0m"
-  echo -e "\033[1;37mValid types: feat, fix, docs, chore, style, refactor, test\033[0m"
-  echo -e "\033[1;37mExample: 'feat(auth): add login functionality'\033[0m"
-  exit 1
+if ! echo "$commit_msg" | grep -qE "$full_regex"; then
+    echo -e "\033[1;31m❌ Commit message does not follow Conventional Commit format.\033[0m"
+    echo -e "\033[1;33mThe commit message should follow this format:\033[0m"
+    echo -e "\033[1;37m  <type>(<scope>): <description>\033[0m"
+    echo -e "\033[1;37m  or\033[0m"
+    echo -e "\033[1;37m  <type>: <description>\033[0m"
+    echo -e "\033[1;33mWhere:\033[0m"
+    echo -e "\033[1;37m  - type is one of: ${allowed_commit_types//|/, }\033[0m"
+    echo -e "\033[1;37m  - scope is optional and can contain letters, numbers, and spaces\033[0m"
+    echo -e "\033[1;37m  - description is required\033[0m"
+    echo -e "\033[1;33mExamples:\033[0m"
+    echo -e "\033[1;37m  'feat(auth): add login functionality'\033[0m"
+    echo -e "\033[1;37m  'fix: resolve memory leak'\033[0m"
+    echo -e "\033[1;37m  'docs(readme): update installation steps'\033[0m"
+    exit 1
 fi
 
 # Check for a BREAKING CHANGE footer

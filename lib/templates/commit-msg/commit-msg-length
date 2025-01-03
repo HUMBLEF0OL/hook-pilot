@@ -3,9 +3,11 @@
 echo -e "\033[1;37m📏 Checking Commit Message Length...\033[0m"
 
 max_length=$(get_hook_config "commit-msg" "max_length" "72")
-max_length=$((max_length))
 
+# Strip unwanted characters
+max_length=$(echo "$max_length" | tr -d '[:space:]')
 commit_msg=$(cat "$1")
+
 if [ ${#commit_msg} -gt "$max_length" ]; then
     echo -e "\033[1;31m❌ Commit message exceeds the maximum length of $max_length characters.\033[0m"
     echo -e "\033[1;33mPlease shorten your commit message.\033[0m"
