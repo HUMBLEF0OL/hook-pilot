@@ -1,14 +1,16 @@
 #!/bin/sh
 
-echo "✏️ Adding Commit Message Template..."
+echo -e "\033[1;34m✏️ Adding Commit Message Template...\033[0m"
 
 # Define the template to use (you can customize this)
-commit_template="Your commit message should follow the format: [TYPE] - Subject"
+default_template="[type](scope): description\n\nDetailed explanation of the change (optional)."
+commit_template=$(get_hook_config "commit-msg" "template" "$default_template")
 
 # Check if a commit message exists, otherwise use the template
 if [ -z "$2" ]; then
   echo "$commit_template" > "$1"
-  echo "✅ Commit message template applied."
+  echo -e "\033[1;32m✅ Commit message template applied.\033[0m"
 else
-  echo "❌ Commit message already exists. No changes made."
+  echo -e "\033[1;31m❌ Commit message already exists. No changes made.\033[0m"
 fi
+

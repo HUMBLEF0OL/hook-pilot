@@ -1,16 +1,12 @@
 #!/bin/sh
 
-echo "🌿 Adding Branch Info to Commit Message..."
-
-# Get the current git branch
+echo "\033[1;33m🌿 Adding Branch Info to Commit Message...\033[0m"
 branch_name=$(git rev-parse --abbrev-ref HEAD)
 
 if [ -z "$branch_name" ]; then
-  echo "❌ Unable to determine the branch name. Ensure you're in a Git repository."
+  echo "\033[1;31m❌ Unable to determine the branch name. Ensure you're in a Git repository.\033[0m"
   exit 1
 fi
 
-# Append branch name to commit message
 echo "[${branch_name}] $(cat "$1")" > "$1"
-
-echo "✅ Branch info added to commit message."
+echo "\033[1;32m✅ Branch info added to commit message.\033[0m"
