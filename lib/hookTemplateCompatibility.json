@@ -35,7 +35,9 @@
   "prepare-commit-msg": [
     {
       "name": "Commit Message Template",
-      "variables": {},
+      "variables": {
+        "template": "Format: <type>(<scope>): <description>"
+      },
       "value": "prepare-commit-msg-template"
     },
     {
