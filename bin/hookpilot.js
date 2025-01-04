@@ -3,7 +3,7 @@
 const { program } = require("commander");
 const { addHooks, removeHooks, listHooks } = require("../lib/hooks");
 const { restoreConfig } = require("../lib/restoreHooks");
-const { removeTool, initializeConfig } = require("../lib/setupTools");
+const { uninstallTool, initializeConfig } = require("../lib/setupTools");
 const { prompt } = require("enquirer");
 
 program
@@ -35,7 +35,7 @@ program
         console.log("ERROR: ", err.message);
       }
     } else {
-      console.log("\n⚡ You can add hooks later using: hookpilot add hooks\n");
+      console.log(`\n⚡ You can add hooks later using: \x1b[1m\x1b[33mhookpilot add\x1b[0m\n`);
     }
 
     console.log("🎉 hookpilot initialization complete!");
@@ -76,7 +76,7 @@ program
     "Uninstalls Git hook tools and removes all related configurations and files.",
   )
   .action(async () => {
-    await removeTool();
+    await uninstallTool();
   });
 
 program.parse(process.argv);
