@@ -30,6 +30,11 @@
       "name": "Check Dependencies",
       "variables": {},
       "value": "pre-commit-dependency-check"
+    },
+    {
+      "name": "Build Check",
+      "variables": {},
+      "value": "pre-commit-build-check"
     }
   ],
   "prepare-commit-msg": [

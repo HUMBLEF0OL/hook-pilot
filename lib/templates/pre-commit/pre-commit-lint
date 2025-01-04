@@ -20,7 +20,7 @@ if ! grep -q '"lint"' package.json; then
 
   // Save changes to package.json
   fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
-  console.log('✅ Lint command added to package.json.');
+  console.log('✅ Lint command added to package.json. Please update the lint command as needed.');
   "
   exit 1
 fi

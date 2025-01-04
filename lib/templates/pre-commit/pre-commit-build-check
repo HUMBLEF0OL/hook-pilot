@@ -1,0 +1,38 @@
+#!/bin/sh
+
+echo -e "\033[1m🏗️  Running Build Check...\033[0m"
+
+# Check if build command exists in package.json
+if ! grep -q '"build"' package.json; then
+  echo -e "\033[33m⚠️  Build command not found! Adding a default build command to package.json...\033[0m"
+
+  # Add the build command to package.json using Node.js
+  node -e "
+  const fs = require('fs');
+  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+  if (!packageJson.scripts) {
+    packageJson.scripts = {};
+  }
+
+  // Determine appropriate build command based on project structure
+  let buildCommand = 'echo \"No build configuration detected\" && exit 1';
+
+  // Add build command
+  packageJson.scripts.build = buildCommand;
+
+  // Save changes to package.json
+  fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
+  console.log('✅ Build command added to package.json. Please update the build command as needed.');
+  "
+  exit 1
+fi
+
+# Run build command
+npm run build
+if [ $? -ne 0 ]; then
+  echo -e "\033[1;31m❌  Build failed. Please fix errors before committing.\033[0m"
+  exit 1
+fi
+
+echo -e "\033[1;32m✅ Build check passed.\033[0m"

@@ -8,10 +8,41 @@ outdated=$(npm outdated --json)
 if [ "$outdated" != "{}" ] && [ -n "$outdated" ]; then
   echo -e "\033[1;33m⚠️  Outdated dependencies detected:\033[0m"
   
-  # Use Node.js to format and display JSON
+  # Use Node.js to parse JSON and format as table
   node -e "
-  const outdated = $outdated;
-  console.log(JSON.stringify(outdated, null, 2));
+    const outdated = $outdated;
+    
+    // Define column headers and widths
+    const headers = ['Package', 'Current', 'Wanted', 'Latest', 'Location', 'Depended by'];
+    const columnWidths = headers.map(header => header.length);
+    
+    // Calculate maximum width for each column
+    Object.entries(outdated).forEach(([pkg, info]) => {
+      columnWidths[0] = Math.max(columnWidths[0], pkg.length);
+      columnWidths[1] = Math.max(columnWidths[1], info.current.length);
+      columnWidths[2] = Math.max(columnWidths[2], info.wanted.length);
+      columnWidths[3] = Math.max(columnWidths[3], info.latest.length);
+      columnWidths[4] = Math.max(columnWidths[4], ('node_modules/' + pkg).length);
+      columnWidths[5] = Math.max(columnWidths[5], info.dependent.length);
+    });
+    
+    // Print headers
+    console.log(headers.map((header, i) => 
+      header.padEnd(columnWidths[i] + 2)
+    ).join(''));
+    
+    // Print package information
+    Object.entries(outdated).forEach(([pkg, info]) => {
+      const row = [
+        pkg.padEnd(columnWidths[0] + 2),
+        info.current.padEnd(columnWidths[1] + 2),
+        info.wanted.padEnd(columnWidths[2] + 2),
+        info.latest.padEnd(columnWidths[3] + 2),
+        ('node_modules/' + pkg).padEnd(columnWidths[4] + 2),
+        info.dependent.padEnd(columnWidths[5])
+      ];
+      console.log(row.join(''));
+    });
   "
 
   echo -e "\033[1;33m⚠️ Run 'npm update' to update outdated dependencies.\033[0m"
