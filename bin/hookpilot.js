@@ -35,7 +35,7 @@ program
         console.log("ERROR: ", err.message);
       }
     } else {
-      console.log("\n⚡ You can add hooks later using: hookpilot add hooks\n");
+      console.log("\n⚡ You can add hooks later using: hookpilot add\n");
     }
 
     console.log("🎉 hookpilot initialization complete!");
