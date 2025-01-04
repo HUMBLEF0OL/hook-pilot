@@ -8,20 +8,30 @@ if ! npx prettier --version > /dev/null 2>&1; then
   exit 1
 fi
 
-# Remove spaces around = in variable assignment
+
+# Get the files_to_format pattern
 files_to_format=$(get_hook_config "pre-commit" "files_to_format" "**/*.{js,jsx,ts,tsx,css,scss,md}")
 
-# Check if there are any files to format
-if ! find . -path "$files_to_format" -type f 2>/dev/null | grep -q .; then
-    echo -e "\033[1;33m⚠️  No files found matching the pattern. Skipping formatting.\033[0m"
-    exit 0
-fi
+echo -e "\033[1m🔍  Looking for files matching pattern: $files_to_format\033[0m"
 
-# Format code
-npx prettier --write "$files_to_format"
-if [ $? -ne 0 ]; then
-  echo -e "\033[1;31m❌  Formatting failed. Please check for errors.\033[0m"
-  exit 1
-fi
+# Extract extensions from the pattern
+extensions=$(echo "$files_to_format" | sed -n 's/.*{\([^}]*\)}.*/\1/p')
 
-echo -e "\033[1;32m✅  Code formatted successfully.\033[0m"
+# Convert extensions to grep pattern
+grep_pattern=$(echo "$extensions" | tr ',' '|' | sed 's/\([a-z]*\)/\\\.\1$/')
+
+# Get staged files that match any of the extensions
+staged_files=$(git diff --cached --name-only --diff-filter=ACMR | grep -E "$grep_pattern")
+
+if [ -z "$staged_files" ]; then
+    echo -e "\033[1;33m⚠️  No matching files found in staged changes. Skipping formatting.\033[0m"
+else    
+    # Format code only if files are found
+    echo "$staged_files" | xargs npx prettier --write
+    if [ $? -ne 0 ]; then
+        echo -e "\033[1;31m❌  Formatting failed. Please check for errors.\033[0m"
+        exit 1
+    fi
+    echo -e "\033[1;32m✅  Code formatted successfully. Please stage the formatted files\033[0m"
+    exit 1
+fi

@@ -6,7 +6,7 @@ echo -e "\033[1m📦 Checking Outdated Dependencies...\033[0m"
 outdated=$(npm outdated --json)
 
 if [ "$outdated" != "{}" ] && [ -n "$outdated" ]; then
-  echo -e "\033[1;33m⚠️  Outdated dependencies detected:\033[0m"
+  echo -e "\033[1;33m⚠️  Outdated dependencies detected:\033[0m\n"
   
   # Use Node.js to parse JSON and format as table
   node -e "
@@ -45,7 +45,7 @@ if [ "$outdated" != "{}" ] && [ -n "$outdated" ]; then
     });
   "
 
-  echo -e "\033[1;33m⚠️ Run 'npm update' to update outdated dependencies.\033[0m"
+  echo -e "\n\033[1;33m⚠️ Run 'npm update' to update outdated dependencies.\033[0m"
 else
   echo -e "\033[1;32m✅ All dependencies are up-to-date.\033[0m"
 fi
