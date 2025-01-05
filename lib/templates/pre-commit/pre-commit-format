@@ -32,6 +32,5 @@ else
         echo -e "\033[1;31m❌  Formatting failed. Please check for errors.\033[0m"
         exit 1
     fi
-    echo -e "\033[1;32m✅  Code formatted successfully. Please stage the formatted files\033[0m"
-    exit 1
+    echo -e "\033[1;32m✅  Code formatted successfully.\033[0m"
 fi

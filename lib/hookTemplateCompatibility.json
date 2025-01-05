@@ -79,16 +79,9 @@
       "value": "post-commit-log"
     },
     {
-      "name": "Notify Teams (Slack)",
-      "variables": {},
-      "value": "post-commit-slack",
-      "requiresConfig": "SLACK_WEBHOOK_URL must be set in your environment variables."
-    },
-    {
-      "name": "Trigger CI/CD",
-      "variables": {},
-      "value": "post-commit-cicd",
-      "requiresConfig": "CI/CD pipeline credentials must be configured (e.g., GitHub Actions, Jenkins)."
+      "name": "Cleanup",
+      "variable": {},
+      "value": "post-commit-cleanup"
     },
     {
       "name": "Auto-update Files",

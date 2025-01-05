@@ -1,0 +1,38 @@
+#!/bin/sh
+
+echo "🧹 Starting Post-Commit Cleanup..."
+
+# -------------------------------
+# Configuration Section
+# -------------------------------
+# Define paths for temporary files or directories, separated by space
+dirs_to_clean=".git/temp build/temp logs/temp node_modules/.cache .next/cache"
+files_to_clean="*.log *.tmp *.bak"
+
+# -------------------------------
+# Cleanup Temporary Files/Directories
+# -------------------------------
+echo "🧹 Cleaning up temporary files and directories..."
+for dir in $dirs_to_clean; do
+  if [ -d "$dir" ]; then
+    echo "🗑 Removing $dir..."
+    rm -rf "$dir"
+    echo "✅ $dir cleaned up."
+  else
+    echo "ℹ️ $dir not found. Skipping."
+  fi
+done
+
+# -------------------------------
+# Final Cleanup Tasks
+# -------------------------------
+echo "🗑 Removing stray or unnecessary files..."
+for pattern in $files_to_clean; do
+  find . -type f -name "$pattern" -exec rm -f {} +
+  echo "✅ Removed files matching $pattern."
+done
+
+# -------------------------------
+# Finalize
+# -------------------------------
+echo "✅ Post-commit cleanup completed successfully."

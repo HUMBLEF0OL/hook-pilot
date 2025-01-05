@@ -1,19 +1,30 @@
 #!/bin/sh
 
-echo "📝 Logging Commit Details..."
+echo "📝 \033[1;34mLogging Commit Details...\033[0m"
+
 
 # Define log file
-log_file=".git/post-commit-log.txt"
+log_file="" # Change to "" to log only to the console
+log_file=$(get_hook_config "post-commit" "log_file" ".git-hooks/post-commit-log.txt" | tr -d '"' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+
 
 # Get commit details
 commit_hash=$(git rev-parse HEAD)
 commit_message=$(git log -1 --pretty=%B)
 commit_author=$(git log -1 --pretty=format:'%an')
 
-# Append to the log file
-echo "Commit: $commit_hash" >> "$log_file"
-echo "Author: $commit_author" >> "$log_file"
-echo "Message: $commit_message" >> "$log_file"
-echo "---------------------------" >> "$log_file"
+# Prepare the log entry with color coding
+log_entry="\033[1;32m\nCommit:\033[0m $commit_hash\n\033[1;33mAuthor:\033[0m $commit_author\n\033[1;36mMessage:\033[0m $commit_message\n\033[1;31m---------------------------\033[0m"
 
-echo "✅ Commit details logged to $log_file."
+# Check if log_file is set
+if [ -n "$log_file" ]; then
+  # Ensure the directory exists
+  mkdir -p "$(dirname "$log_file")"
+
+  # Append plain log to file (no color codes)
+  plain_log_entry="Commit: $commit_hash\nAuthor: $commit_author\nMessage: $commit_message\n---------------------------"
+  echo -e "$plain_log_entry" >> "$log_file"
+  echo -e "✅ \033[1;32mCommit details logged to $log_file.\033[0m"
+fi
+
+echo -e "$log_entry"

@@ -4,7 +4,7 @@
     <img src="./assets/logo.png" alt="HookPilot logo" style="width: 50%; height: auto;">
 </p>
 
-**HookPilot** is a flexible and configurable Git hook manager that allows developers to automate workflows and enforce coding standards across the software development lifecycle. Whether you need to run linters, perform security checks, or trigger CI/CD pipelines, HookPilot makes it seamless to integrate these tasks into Git hooks.
+**HookPilot** is a flexible and configurable Git hook manager that allows developers to automate workflows and enforce coding standards across the software development lifecycle. Whether you need to run linters, perform security checks, or trigger code formatting, HookPilot makes it seamless to integrate these tasks into Git hooks.
 
 ---
 
@@ -14,7 +14,6 @@
 - **Customizable Configurations**: Hooks can be configured to suit project-specific needs (e.g., branch protection, large file checks).
 - **Lightweight and Fast**: Designed to be minimal and efficient, avoiding unnecessary dependencies.
 - **Extensible**: Add custom scripts for unique workflows.
-- **Git Tool Support**: Integrates with Git and supports popular tools like Husky, streamlining your workflow.
 
 ---
 
@@ -22,82 +21,83 @@
 
 Below is the comprehensive list of hooks available in **HookPilot**, along with their specific tasks and configurations (where required).
 
+
 ### 🔹 `pre-commit`
 
 Hooks that run before a commit is finalized.
 
-| **Name**                            | **Value**                     | **Description**                                                | **Requires Configuration**                   |
-| ----------------------------------- | ----------------------------- | -------------------------------------------------------------- | -------------------------------------------- |
-| Linting (`npm run lint`)            | `pre-commit-lint`             | Run linting tools like ESLint to check code style and quality. | Ensure ESLint is installed and configured.   |
-| Format (`npm run format`)           | `pre-commit-format`           | Auto-format code using tools like Prettier.                    | Ensure Prettier is installed and configured. |
-| Unit Tests (`npm test`)             | `pre-commit-test`             | Run unit tests to validate code changes.                       | None                                         |
-| Security Check (`npm audit`)        | `pre-commit-security-check`   | Perform a security scan on dependencies using npm audit.       | None                                         |
-| Check Dependencies (`npm outdated`) | `pre-commit-dependency-check` | Check for outdated dependencies.                               | None                                         |
+| **Name**           | **Description**                                                | **External Dependency**                                           | **Available Variables** |
+| ------------------ | -------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------- |
+| Linting            | Run linting tools like ESLint to check code style and quality. | Ensure linting tools (e.g., ESLint) are installed and configured. | None                    |
+| Format             | Auto-format code using tools like Prettier.                    | Ensure Prettier is installed and configured.                      | `files_to_format`       |
+| Unit Tests         | Run unit tests to validate code changes.                       | None                                                              | None                    |
+| Security Check     | Perform a security scan on dependencies using npm audit.       | None                                                              | `excluded_files`        |
+| Check Dependencies | Check for outdated dependencies.                               | None                                                              | None                    |
+| Build Check        | Verify that the code compiles correctly before committing.     | None                                                              | None                    |
 
 ### 🔹 `prepare-commit-msg`
 
 Hooks that prepare or modify the commit message.
 
-| **Name**                | **Value**                     | **Description**                                              | **Requires Configuration** |
-| ----------------------- | ----------------------------- | ------------------------------------------------------------ | -------------------------- |
-| Commit Message Template | `prepare-commit-msg-template` | Pre-fill commit message with a standard template.            | None                       |
-| Add Version Info        | `prepare-commit-msg-version`  | Automatically append version information to commit messages. | None                       |
-| Add Branch Info         | `prepare-commit-msg-branch`   | Add branch-specific information to commit messages.          | None                       |
+| **Name**                | **Description**                                              | **External Dependency** | **Available Variables** |
+| ----------------------- | ------------------------------------------------------------ | ----------------------- | ----------------------- |
+| Commit Message Template | Pre-fill commit message with a standard template.            | None                    | `template`              |
+| Add Version Info        | Automatically append version information to commit messages. | None                    | None                    |
+| Add Branch Info         | Add branch-specific information to commit messages.          | None                    | None                    |
 
 ### 🔹 `commit-msg`
 
 Hooks that validate commit messages.
 
-| **Name**             | **Value**                 | **Description**                                     | **Requires Configuration** |
-| -------------------- | ------------------------- | --------------------------------------------------- | -------------------------- |
-| Commit Message Check | `commit-msg-conventional` | Enforce Conventional Commit standards for messages. | None                       |
-| Check Message Length | `commit-msg-length`       | Ensure commit messages adhere to length limits.     | None                       |
+| **Name**             | **Description**                                     | **External Dependency** | **Available Variables** |
+| -------------------- | --------------------------------------------------- | ----------------------- | ----------------------- |
+| Commit Message Check | Enforce Conventional Commit standards for messages. | None                    | `allowed_commit_types`  |
+| Check Message Length | Ensure commit messages adhere to length limits.     | None                    | `max_length`            |
 
 ### 🔹 `post-commit`
 
 Hooks that run after a commit is finalized.
 
-| **Name**             | **Value**                 | **Description**                               | **Requires Configuration**            |
-| -------------------- | ------------------------- | --------------------------------------------- | ------------------------------------- |
-| Log Commit           | `post-commit-log`         | Log commit information to a file or console.  | None                                  |
-| Notify Teams (Slack) | `post-commit-slack`       | Send commit notifications to a Slack channel. | SLACK_WEBHOOK_URL must be set.        |
-| Trigger CI/CD        | `post-commit-cicd`        | Trigger CI/CD pipelines after a commit.       | CI/CD credentials must be configured. |
-| Auto-update Files    | `post-commit-auto-update` | Automatically update files post-commit.       | None                                  |
+| **Name**          | **Description**                              | **External Dependency** | **Available Variables** |
+| ----------------- | -------------------------------------------- | ----------------------- | ----------------------- |
+| Log Commit        | Log commit information to a file or console. | None                    | None                    |
+| Cleanup           | Remove unnecessary files and temporary data, | None                    | None                    |
+| Auto-update Files | Automatically update files post-commit.      | None                    | None                    |
 
 ### 🔹 `pre-push`
 
 Hooks that run before code is pushed to a remote repository.
 
-| **Name**                 | **Value**                     | **Description**                                        | **Requires Configuration**               |
-| ------------------------ | ----------------------------- | ------------------------------------------------------ | ---------------------------------------- |
-| Unit Tests (`npm test`)  | `pre-push-test`               | Run unit tests before pushing code.                    | None                                     |
-| Dependency Check         | `pre-push-dependency-check`   | Check for outdated or vulnerable dependencies.         | None                                     |
-| Block Secrets            | `pre-push-secrets-check`      | Scan files for hardcoded secrets like keys and tokens. | None                                     |
-| Check Large Files        | `pre-push-large-files`        | Block pushes containing large files.                   | Set up large file limits in the script.  |
-| Check Protected Branches | `pre-push-protected-branches` | Prevent pushes to protected branches.                  | Define protected branches in repository. |
+| **Name**                 | **Description**                                        | **External Dependency**                  | **Available Variables** |
+| ------------------------ | ------------------------------------------------------ | ---------------------------------------- | ----------------------- |
+| Unit Tests (`npm test`)  | Run unit tests before pushing code.                    | None                                     | None                    |
+| Dependency Check         | Check for outdated or vulnerable dependencies.         | None                                     | None                    |
+| Block Secrets            | Scan files for hardcoded secrets like keys and tokens. | None                                     | None                    |
+| Check Large Files        | Block pushes containing large files.                   | Set up large file limits in the script.  | None                    |
+| Check Protected Branches | Prevent pushes to protected branches.                  | Define protected branches in repository. | None                    |
 
 ### 🔹 `post-merge`
 
 Hooks that run after a merge operation is completed.
 
-| **Name**             | **Value**                 | **Description**                           | **Requires Configuration**                        |
-| -------------------- | ------------------------- | ----------------------------------------- | ------------------------------------------------- |
-| Run Migrations       | `post-merge-migrations`   | Run database migrations after a merge.    | Migration tools must be set up (e.g., Sequelize). |
-| Trigger Deployments  | `post-merge-deployment`   | Trigger deployments post-merge.           | Deployment pipelines must be configured.          |
-| Reset Configurations | `post-merge-reset-config` | Reset project configurations if required. | None                                              |
-| Notify Teams (Slack) | `post-merge-slack`        | Notify teams about the merge.             | SLACK_WEBHOOK_URL must be set.                    |
+| **Name**             | **Description**                           | **External Dependency**                           | **Available Variables** |
+| -------------------- | ----------------------------------------- | ------------------------------------------------- | ----------------------- |
+| Run Migrations       | Run database migrations after a merge.    | Migration tools must be set up (e.g., Sequelize). | None                    |
+| Trigger Deployments  | Trigger deployments post-merge.           | Deployment pipelines must be configured.          | None                    |
+| Reset Configurations | Reset project configurations if required. | None                                              | None                    |
+| Notify Teams (Slack) | Notify teams about the merge.             | SLACK_WEBHOOK_URL must be set.                    | None                    |
 
 ### 🔹 `post-checkout`
 
 Hooks that run after a branch or file checkout.
 
-| **Name**                     | **Value**                    | **Description**                             | **Requires Configuration**             |
-| ---------------------------- | ---------------------------- | ------------------------------------------- | -------------------------------------- |
-| Reconfigure Environment      | `post-checkout-env`          | Adjust environment-specific configurations. | Define environment configurations.     |
-| Reset Permissions            | `post-checkout-permissions`  | Reset file or directory permissions.        | Define permission settings.            |
-| Handle Branch-specific Tasks | `post-checkout-branch-tasks` | Run branch-specific scripts or tasks.       | Define branch-specific configurations. |
+| **Name**                     | **Description**                             | **External Dependency**                | **Available Variables** |
+| ---------------------------- | ------------------------------------------- | -------------------------------------- | ----------------------- |
+| Reconfigure Environment      | Adjust environment-specific configurations. | Define environment configurations.     | None                    |
+| Reset Permissions            | Reset file or directory permissions.        | Define permission settings.            | None                    |
+| Handle Branch-specific Tasks | Run branch-specific scripts or tasks.       | Define branch-specific configurations. | None                    |
 
----
+> **NOTE**:The variable configuration for selected template can be updated from the hooks-config.json file under the config key.
 
 ## 📖 Usage
 
