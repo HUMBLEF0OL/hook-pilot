@@ -1,5 +1,5 @@
 {
-    "name": "husky",
+    "name": "git-hooks",
     "hooks": [
         "pre-commit"
     ]

@@ -14,7 +14,7 @@ program
 program
   .command("init")
   .description(
-    "Initialize hookpilot with the selected hooks tool (Git, Husky, or Lefthook) and configure hooks path for the project",
+    "Initialize hookpilot and configure hooks path for the project",
   )
   .action(async () => {
     await initializeConfig();
