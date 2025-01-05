@@ -9,7 +9,7 @@ if ! command -v npm &> /dev/null; then
 fi
 
 # Run unit tests
-npm test
+CI=true npm test
 if [ $? -ne 0 ]; then
   echo -e "\033[1;31m❌ Unit tests failed. Fix errors before committing.\033[0m"
   exit 1
