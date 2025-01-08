@@ -75,12 +75,17 @@
   "post-commit": [
     {
       "name": "Log Commit",
-      "variables": {},
+      "variables": {
+        "log_file": ".git-hooks/post-commit-log.txt"
+      },
       "value": "post-commit-log"
     },
     {
       "name": "Cleanup",
-      "variable": {},
+      "variable": {
+        "dirs_to_clean": ".git/temp build/temp logs/temp node_modules/.cache .next/cache",
+        "files_to_clean": "*.log *.tmp *.bak"
+      },
       "value": "post-commit-cleanup"
     },
     {
