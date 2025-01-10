@@ -30,10 +30,10 @@ Hooks that run before a commit is finalized.
 | ------------------ | -------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------- |
 | Linting            | Run linting tools like ESLint to check code style and quality. | Ensure linting tools (e.g., ESLint) are installed and configured. | None                    |
 | Format             | Auto-format code using tools like Prettier.                    | Ensure Prettier is installed and configured.                      | `files_to_format`       |
-| Unit Tests         | Run unit tests to validate code changes.                       | None                                                              | None                    |
+| Unit Tests         | Run unit tests to validate code changes.                       | None                                                              | `test_script_name`      |
 | Security Check     | Perform a security scan on dependencies using npm audit.       | None                                                              | `excluded_files`        |
 | Check Dependencies | Check for outdated dependencies.                               | None                                                              | None                    |
-| Build Check        | Verify that the code compiles correctly before committing.     | None                                                              | None                    |
+| Build Check        | Verify that the code compiles correctly before committing.     | None                                                              | `build_script_name`     |
 
 ### 🔹 `prepare-commit-msg`
 

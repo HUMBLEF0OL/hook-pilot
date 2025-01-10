@@ -2,14 +2,51 @@
 
 echo -e "\033[1m🧪 Running Unit Tests...\033[0m"
 
-# Check if npm test command is available
-if ! command -v npm &> /dev/null; then
-  echo -e "\033[1;31m❌ npm not found! Ensure Node.js and npm are installed.\033[0m"
+rawCommandName=$(get_hook_config "pre-commit" "test_script_name" "test")
+# Strip quotes and clean the command name (remove newlines and trim whitespace)
+commandName=$(echo "$rawCommandName" | sed 's/^"//;s/"$//' | tr -d '\n' | xargs)
+
+# Check if the script exists using Node.js for JSON parsing
+if ! node -e "
+try {
+  const fs = require('fs');
+  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+  const commandName = '${commandName}';
+  if (!packageJson.scripts || typeof packageJson.scripts[commandName] === 'undefined') {
+    process.exit(1);
+  }
+  process.exit(0);
+} catch (error) {
+  console.error('Error checking package.json:', error.message);
+  process.exit(1);
+}
+"; then
+  echo -e "\033[33m⚠️  Test command '$commandName' not found! Adding a default test command to package.json...\033[0m"
+
+  # Add the test command to package.json using Node.js
+  node -e "
+try {
+  const fs = require('fs');
+  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+  const commandName = '${commandName}';
+
+  if (!packageJson.scripts) {
+    packageJson.scripts = {};
+  }
+  packageJson.scripts[commandName] = 'echo \"No test configuration detected\" && exit 1';
+  fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
+  console.log('\u2705 Test command \"' + commandName + '\" added to package.json. Please update the test command as needed.');
+} catch (error) {
+  console.error('Error updating package.json:', error.message);
+  process.exit(1);
+}
+"
   exit 1
 fi
 
-# Run unit tests
-CI=true npm test
+
+# Run test command
+CI=true npm run "$commandName"
 if [ $? -ne 0 ]; then
   echo -e "\033[1;31m❌ Unit tests failed. Fix errors before committing.\033[0m"
   exit 1

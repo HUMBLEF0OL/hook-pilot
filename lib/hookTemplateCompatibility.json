@@ -16,7 +16,9 @@
     },
     {
       "name": "Unit Tests",
-      "variables": {},
+      "variables": {
+        "test_script_name": "test"
+      },
       "value": "pre-commit-test"
     },
     {
@@ -33,7 +35,9 @@
     },
     {
       "name": "Build Check",
-      "variables": {},
+      "variables": {
+        "build_script_name": "build"
+      },
       "value": "pre-commit-build-check"
     }
   ],
