@@ -110,28 +110,28 @@ Hooks that run after a branch or file checkout.
 2. Initialize HookPilot in your project:
 
    ```bash
-   hookpilot init
+   npx hookpilot init
    ```
 
 3. Add or configure hooks using the interactive CLI:
 
    ```bash
-   hookpilot add
+   npx hookpilot add
    ```
 
 4. Restore hooks:
 
    ```bash
-   hookpilot restore
+   npx hookpilot restore
    ```
 
 5. Remove hooks:
    ```bash
-   hookpilot remove
+   npx hookpilot remove
    ```
 6. List hooks:
    ```bash
-   hookpilot list
+   npx hookpilot list
    ```
 
 Here's the updated content with the added information about using `--no-verify` to override hooks:
@@ -167,7 +167,7 @@ HookPilot supports custom hooks through an interactive CLI process that guides y
 1. Start the interactive hook configuration:
 
    ```bash
-   hookpilot add
+   npx hookpilot add
    ```
 
 2. Select the Git hook type you want to extend (e.g., pre-commit, post-merge, etc.)
